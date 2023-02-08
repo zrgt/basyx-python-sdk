@@ -521,7 +521,7 @@ class Referable(metaclass=abc.ABCMeta):
                 relative_path.reverse()
                 return referable, relative_path
             if referable.parent:
-                assert(isinstance(referable.parent, Referable))
+                assert isinstance(referable.parent, Referable)
                 referable = referable.parent
                 relative_path.append(referable.id_short)
                 continue
@@ -560,7 +560,7 @@ class Referable(metaclass=abc.ABCMeta):
         relative_path: List[str] = [self.id_short]
         # Commit to all ancestors with sources
         while current_ancestor:
-            assert(isinstance(current_ancestor, Referable))
+            assert isinstance(current_ancestor, Referable)
             if current_ancestor.source != "":
                 backends.get_backend(current_ancestor.source).commit_object(committed_object=self,
                                                                             store_object=current_ancestor,
@@ -626,6 +626,9 @@ class Reference:
 
         TODO: Add instruction what to do after construction
         """
+        if len(key) < 1:
+            raise ValueError("A reference must have at least one key!")
+
         self.key: Tuple[Key, ...]
         super().__setattr__('key', key)
 
@@ -681,8 +684,6 @@ class AASReference(Reference, Generic[_RT]):
                                      object is stored in the `value` attribute of the exception
         :raises KeyError: If the reference could not be resolved
         """
-        if len(self.key) == 0:
-            raise IndexError("List of keys is empty")
         # Find key index last (global) identifier-key in key list (from https://stackoverflow.com/a/6890255/10315508)
         try:
             last_identifier_index = next(i
