@@ -70,7 +70,7 @@ class AssetInformation:
             self.asset_kind, self._global_asset_id, str(self.specific_asset_id), str(self.default_thumbnail))
 
 
-class AssetAdministrationShell(base.Identifiable, base.UniqueIdShortNamespace):
+class AssetAdministrationShell(base.Identifiable, base.UniqueIdShortNamespace, base.HasDataSpecification):
     """
     An Asset Administration Shell
 
@@ -92,6 +92,7 @@ class AssetAdministrationShell(base.Identifiable, base.UniqueIdShortNamespace):
     :ivar ~.submodel: Unordered list of :class:`submodels <aas.model.submodel.Submodel>` to describe typically the asset
                     of an AAS. (Initialization-parameter: `submodel_`)
     :ivar derived_from: The :class:`reference <aas.model.base.ModelReference>` to the AAS the AAs was derived from
+    :ivar embedded_data_specifications: List of Embedded data specification.
     :ivar extension: An extension of the element.
                      (from :class:`~aas.model.base.HasExtensions`)
     """
@@ -106,16 +107,20 @@ class AssetAdministrationShell(base.Identifiable, base.UniqueIdShortNamespace):
                  administration: Optional[base.AdministrativeInformation] = None,
                  submodel: Optional[Set[base.ModelReference[Submodel]]] = None,
                  derived_from: Optional[base.ModelReference["AssetAdministrationShell"]] = None,
+                 embedded_data_specifications: Iterable[base.EmbeddedDataSpecification]
+                 = (),
                  extension: Iterable[base.Extension] = ()):
         super().__init__()
         self.id: base.Identifier = id_
         self.asset_information: AssetInformation = asset_information
         self.id_short = id_short
-        self.display_name: Optional[base.LangStringSet] = dict() if display_name is None else display_name
+        self.display_name: Optional[base.LangStringSet] = display_name
         self.category = category
-        self.description: Optional[base.LangStringSet] = dict() if description is None else description
+        self.description: Optional[base.LangStringSet] = description
         self.parent: Optional[base.UniqueIdShortNamespace] = parent
         self.administration: Optional[base.AdministrativeInformation] = administration
         self.derived_from: Optional[base.ModelReference["AssetAdministrationShell"]] = derived_from
         self.submodel: Set[base.ModelReference[Submodel]] = set() if submodel is None else submodel
+        self.embedded_data_specifications: Iterable[base.EmbeddedDataSpecification] \
+            = list(embedded_data_specifications)
         self.extension = base.NamespaceSet(self, [("name", True)], extension)

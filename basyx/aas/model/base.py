@@ -14,7 +14,7 @@ import inspect
 import itertools
 from enum import Enum, unique
 from typing import List, Optional, Set, TypeVar, MutableSet, Generic, Iterable, Dict, Iterator, Union, overload, \
-    MutableSequence, Type, Any, TYPE_CHECKING, Tuple, Callable
+    MutableSequence, Type, Any, TYPE_CHECKING, Tuple, Callable, MutableMapping
 import re
 
 from . import datatypes
@@ -32,7 +32,6 @@ QualifierType = str
 # A dict of language-Identifier (according to ISO 639-1 and ISO 3166-1) and string in this language.
 # The meaning of the string in each language is the same.
 # << Data Type >> Example ["en-US", "germany"]
-LangStringSet = Dict[str, str]
 
 Identifier = str
 
@@ -223,6 +222,94 @@ class AssetKind(Enum):
     INSTANCE = 1
 
 
+class QualifierKind(Enum):
+    """
+    Enumeration for denoting whether a Qualifier is a concept, template or value qualifier.
+
+    :cvar CONCEPT_QUALIFIER: qualifies the semantic definition the element is referring to (HasSemantics/semanticId)
+    :cvar TEMPLATE_QUALIFIER: qualifies the elements within a specific submodel on concept level. Template qualifiers are only applicable to elements with kind=„Template”
+    :cvar VALUE_QUALIFIER: qualifies the value of the element and can change during run-time. Value qualifiers are only applicable to elements with kind=„Instance”
+    """
+
+    CONCEPT_QUALIFIER = 0
+    TEMPLATE_QUALIFIER = 1
+    VALUE_QUALIFIER = 2
+
+
+@unique
+class Direction(Enum):
+    """
+    Direction of an event. Used in :class:`aas.model.submodel.BasicEventElement`.
+    """
+
+    INPUT = 0
+    OUTPUT = 1
+
+
+@unique
+class StateOfEvent(Enum):
+    """
+    State of an event. Used in :class:`aas.model.submodel.BasicEventElement`.
+    """
+
+    ON = 0
+    OFF = 1
+
+
+class LangStringSet(MutableMapping[str, str]):
+    """
+    A mapping of language code to string. Must be non-empty.
+
+    langString is an RDF data type. A langString is a value tagged with a language code. RDF requires
+    IETF BCP 4723 language tags, i.e. simple two-letter language tags for Locales like “de” conformant to ISO 639-1
+    are allowed as well as language tags plus extension like “de-DE” for country code, dialect etc. like in “en-US” or
+    “en-GB” for English (United Kingdom) and English (United States). IETF language tags are referencing ISO 639,
+    ISO 3166 and ISO 15924.
+    """
+    def __init__(self, dict_: Dict[str, str]):
+        self.dict: MutableMapping[str, str] = {}
+
+        if len(dict_) < 1:
+            raise ValueError(f"A {self.__class__.__name__} must not be empty!")
+        for ltag in dict_:
+            self._check_language_tag_constraints(ltag)
+            self.dict[ltag] = dict_[ltag]
+
+    @classmethod
+    def _check_language_tag_constraints(cls, ltag: str):
+        split = ltag.split("-", 1)
+        if len(split[0]) != 2 or not split[0].isalpha() or not split[0].islower():
+            raise ValueError(f"The language code '{split[0]}' of the language tag '{ltag}' doesn't consist of exactly "
+                             "two lower-case letters!")
+        if len(split) > 1 and (len(split[1]) != 2 or not split[1].isalpha() or not split[1].isupper()):
+            raise ValueError(f"The extension '{split[1]}' of the language tag '{ltag}' doesn't consist of exactly "
+                             "two upper-case letters!")
+
+    def __getitem__(self, item: str) -> str:
+        return self.dict[item]
+
+    def __setitem__(self, key: str, value: str) -> None:
+        self._check_language_tag_constraints(key)
+        self.dict[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        if len(self.dict) == 1:
+            raise KeyError(f"A {self.__class__.__name__} must not be empty!")
+        del self.dict[key]
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self.dict)
+
+    def __len__(self) -> int:
+        return len(self.dict)
+
+    def __repr__(self) -> str:
+        return self.__class__.__name__ + "(" + ", ".join(f'{k}="{v}"' for k, v in self.items()) + ")"
+
+    def clear(self) -> None:
+        raise KeyError(f"A {self.__class__.__name__} must not be empty!")
+
+
 class Key:
     """
     A key is a reference to an element by its id.
@@ -303,65 +390,6 @@ class Key:
         else:
             return Key(key_type, referable.id_short)
 
-
-class AdministrativeInformation:
-    """
-    Administrative meta-information for an element like version information.
-
-    *Constraint AASd-005:* A revision requires a version. This means, if there is no version there is no revision
-    either.
-
-    :ivar version: Version of the element.
-    :ivar revision: Revision of the element.
-    """
-
-    def __init__(self,
-                 version: Optional[str] = None,
-                 revision: Optional[str] = None):
-        """
-        Initializer of AdministrativeInformation
-
-        :raises ValueError: If version is None and revision is not None
-
-        TODO: Add instruction what to do after construction
-        """
-        self._version: Optional[str]
-        self.version = version
-        self._revision: Optional[str]
-        self.revision = revision
-
-    def _get_version(self):
-        return self._version
-
-    def _set_version(self, version: str):
-        if version == "":
-            raise ValueError("version is not allowed to be an empty string")
-        self._version = version
-
-    version = property(_get_version, _set_version)
-
-    def _get_revision(self):
-        return self._revision
-
-    def _set_revision(self, revision: str):
-        if revision == "":
-            raise ValueError("revision is not allowed to be an empty string")
-        if self.version is None and revision:
-            raise ValueError("A revision requires a version. This means, if there is no version there is no revision "
-                             "neither. Please set version first.")
-        self._revision = revision
-
-    revision = property(_get_revision, _set_revision)
-
-    def __eq__(self, other) -> bool:
-        if not isinstance(other, AdministrativeInformation):
-            return NotImplemented
-        return self.version == other.version and self._revision == other._revision
-
-    def __repr__(self) -> str:
-        return "AdministrativeInformation(version={}, revision={})".format(self.version, self.revision)
-
-
 _NSO = TypeVar('_NSO', bound=Union["Referable", "Qualifier", "HasSemantics", "Extension"])
 
 
@@ -376,6 +404,7 @@ class Namespace(metaclass=abc.ABCMeta):
     """
     @abc.abstractmethod
     def __init__(self) -> None:
+        super().__init__()
         self.namespace_element_sets: List[NamespaceSet] = []
 
     def _get_object(self, object_type: Type[_NSO], attribute_name: str, attribute) -> _NSO:
@@ -438,6 +467,7 @@ class HasExtension(Namespace, metaclass=abc.ABCMeta):
     """
     @abc.abstractmethod
     def __init__(self) -> None:
+        super().__init__()
         self.namespace_element_sets: List[NamespaceSet] = []
         self.extension: NamespaceSet[Extension]
 
@@ -758,6 +788,7 @@ class Reference(metaclass=abc.ABCMeta):
     :ivar referred_semantic_id: SemanticId of the referenced model element. For global references there typically is no
                                 semantic id.
     """
+    @abc.abstractmethod
     def __init__(self, key: Tuple[Key, ...], referred_semantic_id: Optional["Reference"] = None):
         if len(key) < 1:
             raise ValueError("A reference must have at least one key!")
@@ -995,6 +1026,123 @@ class Resource:
         self.content_type: Optional[ContentType] = content_type
 
 
+class DataSpecificationContent:
+    """
+    Data specification content is part of a data specification template and defines
+    which additional attributes shall be added to the element instance that references
+    the data specification template and meta information about the template itself.
+
+    *Constraint AASc-3a-050:* If the `Data_specification_IEC_61360` is used
+    for an element, the value of `Has_data_specification.embedded_data_specifications`
+    shall contain the global reference to the IRI of the corresponding data specification
+    template
+    https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0
+
+    """
+    @abc.abstractmethod
+    def __init__(self):
+        pass
+
+
+class EmbeddedDataSpecification:
+    """
+    Embed the content of a data specification.
+
+    :ivar data_specification: Reference to the data specification
+    :ivar data_specification_content: Actual content of the data specification
+    """
+    def __init__(
+        self,
+        data_specification: Reference,
+        data_specification_content: DataSpecificationContent,
+    ) -> None:
+        self.data_specification = data_specification
+        self.data_specification_content = data_specification_content
+
+
+class HasDataSpecification(metaclass=abc.ABCMeta):
+    """
+    Element that can be extended by using data specification templates.
+
+    A data specification template defines a named set of additional attributes an
+    element may or shall have. The data specifications used are explicitly specified
+    with their global ID.
+
+    :ivar embedded_data_specifications: List of Embedded data specification.
+    """
+    @abc.abstractmethod
+    def __init__(
+        self,
+        embedded_data_specifications: Iterable["EmbeddedDataSpecification"] = (),
+    ) -> None:
+        self.embedded_data_specifications = list(embedded_data_specifications)
+
+
+class AdministrativeInformation(HasDataSpecification):
+    """
+    Administrative meta-information for an element like version information.
+
+    *Constraint AASd-005:* A revision requires a version. This means,
+    if there is no version there is no revision either.
+
+    :ivar version: Version of the element.
+    :ivar revision: Revision of the element.
+    :ivar embedded_data_specifications: List of Embedded data specification.
+     used by the element.
+    """
+
+    def __init__(self,
+                 version: Optional[str] = None,
+                 revision: Optional[str] = None,
+                 embedded_data_specifications: Iterable[EmbeddedDataSpecification]
+                 = ()):
+        """
+        Initializer of AdministrativeInformation
+
+        :raises ValueError: If version is None and revision is not None
+
+        TODO: Add instruction what to do after construction
+        """
+        super().__init__()
+        self._version: Optional[str]
+        self.version = version
+        self._revision: Optional[str]
+        self.revision = revision
+        self.embedded_data_specifications: Iterable[EmbeddedDataSpecification] \
+            = list(embedded_data_specifications)
+
+    def _get_version(self):
+        return self._version
+
+    def _set_version(self, version: str):
+        if version == "":
+            raise ValueError("version is not allowed to be an empty string")
+        self._version = version
+
+    version = property(_get_version, _set_version)
+
+    def _get_revision(self):
+        return self._revision
+
+    def _set_revision(self, revision: str):
+        if revision == "":
+            raise ValueError("revision is not allowed to be an empty string")
+        if self.version is None and revision:
+            raise ValueError("A revision requires a version. This means, if there is no version there is no revision "
+                             "neither. Please set version first.")
+        self._revision = revision
+
+    revision = property(_get_revision, _set_revision)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, AdministrativeInformation):
+            return NotImplemented
+        return self.version == other.version and self._revision == other._revision
+
+    def __repr__(self) -> str:
+        return "AdministrativeInformation(version={}, revision={})".format(self.version, self.revision)
+
+
 class Identifiable(Referable, metaclass=abc.ABCMeta):
     """
     An element that has a globally unique :class:`~.Identifier`.
@@ -1024,36 +1172,146 @@ class Identifiable(Referable, metaclass=abc.ABCMeta):
         self._id = id_
 
 
+_T = TypeVar("_T")
+
+
+class ConstrainedList(MutableSequence[_T], Generic[_T]):
+    """
+    A type of list that can be constrained by hooks, useful when implementing AASd constraints. This list can be
+    initialized with an `item_add_hook`, `item_set_hook` and an `item_del_hook`.
+
+    The item_add_hook is called every time an item is added to the list. It is passed the item that is added and
+    all items currently contained in the list.
+
+    The `item_set_hook` is called every time one or multiple items are overwritten with one or multiple new items, à la
+    `list[i] = new_item` or `list[i:j] = new_items`. It is passed the item(s) about to replaced, the new item(s) and all
+    items currently contained in the list.
+    Note that this can also be used to clear the list, e.g. `list[:] = []`. Thus, to ensure that a list is never empty,
+    `item_set_hook` must be used in addition to `item_del_hook`.
+
+    Finally, `item_del_hook` is called whenever an item is removed from the list, (e.g. via `.remove()`, `.pop()` or
+    `del list[i]`. It is passed the item about to be deleted and the current list elements.
+    """
+
+    def __init__(self, items: Iterable[_T], item_add_hook: Optional[Callable[[_T, List[_T]], None]] = None,
+                 item_set_hook: Optional[Callable[[List[_T], List[_T], List[_T]], None]] = None,
+                 item_del_hook: Optional[Callable[[_T, List[_T]], None]] = None) -> None:
+        super().__init__()
+        self._list: List[_T] = []
+        self._item_add_hook: Optional[Callable[[_T, List[_T]], None]] = item_add_hook
+        self._item_set_hook: Optional[Callable[[List[_T], List[_T], List[_T]], None]] = item_set_hook
+        self._item_del_hook: Optional[Callable[[_T, List[_T]], None]] = item_del_hook
+        self.extend(items)
+
+    def insert(self, index: int, value: _T) -> None:
+        if self._item_add_hook is not None:
+            self._item_add_hook(value, self._list)
+        self._list.insert(index, value)
+
+    @overload
+    def __getitem__(self, index: int) -> _T: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> MutableSequence[_T]: ...
+
+    def __getitem__(self, index: Union[int, slice]) -> Union[_T, MutableSequence[_T]]:
+        return self._list[index]
+
+    @overload
+    def __setitem__(self, index: int, value: _T) -> None: ...
+
+    @overload
+    def __setitem__(self, index: slice, value: Iterable[_T]) -> None: ...
+
+    def __setitem__(self, index: Union[int, slice], value: Union[_T, Iterable[_T]]) -> None:
+        # TODO: remove the following type: ignore once mypy supports type narrowing using overload information
+        # https://github.com/python/mypy/issues/4063
+        if isinstance(index, int):
+            if self._item_set_hook is not None:
+                self._item_set_hook([self._list[index]], [value], self._list)  # type: ignore
+            self._list[index] = value  # type: ignore
+            return
+        if self._item_set_hook is not None:
+            self._item_set_hook(self._list[index], list(value), self._list)  # type: ignore
+        self._list[index] = value  # type: ignore
+
+    @overload
+    def __delitem__(self, index: int) -> None: ...
+
+    @overload
+    def __delitem__(self, index: slice) -> None: ...
+
+    def __delitem__(self, index: Union[int, slice]) -> None:
+        if isinstance(index, int):
+            if self._item_del_hook is not None:
+                self._item_del_hook(self._list[index], self._list)
+            del self._list[index]
+            return
+        if self._item_del_hook is not None:
+            indices = range(len(self._list))[index]
+            # To avoid partial deletions, perform a dry run first.
+            dry_run_list = self._list.copy()
+            # Delete high indices first to avoid conflicts by changing indices due to deletion of other objects.
+            for i in sorted(indices, reverse=True):
+                self._item_del_hook(dry_run_list[i], dry_run_list)
+                del dry_run_list[i]
+        # If all went well, we can now perform the real deletion.
+        del self._list[index]
+
+    def __len__(self) -> int:
+        return len(self._list)
+
+    def __repr__(self) -> str:
+        return repr(self._list)
+
+    def __eq__(self, other) -> bool:
+        return other == self._list
+
+
 class HasSemantics(metaclass=abc.ABCMeta):
     """
     Element that can have a semantic definition.
 
     <<abstract>>
 
+    *Constraint AASd-118:* If there is a supplemental semantic ID (HasSemantics/supplementalSemanticId) defined,
+                           then there shall be also a main semantic ID (HasSemantics/semanticId).
+
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the element.
                        The semantic id may either reference an external global id or it may reference a referable model
                        element of kind=Type that defines the semantics of the element.
+    :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
+                                    supplemental semantic ID of the element.
     """
     @abc.abstractmethod
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         # TODO: parent can be any `Namespace`, unfortunately this definition would be incompatible with the definition
         #  of Referable.parent as `UniqueIdShortNamespace`
         self.parent: Optional[Any] = None
+        self._supplemental_semantic_id: ConstrainedList[Reference] = ConstrainedList(
+            [], item_add_hook=self._check_constraint_add)
         self._semantic_id: Optional[Reference] = None
+        self._supplemental_semantic_id: List[Reference] = []
+
+    def _check_constraint_add(self, _new: Reference, _list: List[Reference]) -> None:
+        if self.semantic_id is None:
+            raise AASConstraintViolation(118, "A semantic_id must be defined before adding a supplemental_semantic_id!")
 
     @property
-    def semantic_id(self):
+    def semantic_id(self) -> Optional[Reference]:
         return self._semantic_id
 
     @semantic_id.setter
     def semantic_id(self, semantic_id: Optional[Reference]) -> None:
+        if semantic_id is None and len(self.supplemental_semantic_id) > 0:
+            raise AASConstraintViolation(118, "semantic_id can not be removed while there is at least one "
+                                              f"supplemental_semantic_id: {self.supplemental_semantic_id!r}")
         if self.parent is not None:
             if semantic_id is not None:
                 for set_ in self.parent.namespace_element_sets:
                     if set_.contains_id("semantic_id", semantic_id):
-                        raise KeyError("Object with semantic_id '{}' is already present in the parent Namespace"
-                                       .format(semantic_id))
+                        raise KeyError("Object with semantic_id is already present in the parent Namespace")
             set_add_list: List[NamespaceSet] = []
             for set_ in self.parent.namespace_element_sets:
                 if self in set_:
@@ -1065,6 +1323,14 @@ class HasSemantics(metaclass=abc.ABCMeta):
         # Redundant to the line above. However this way, we make sure that we really update the _semantic_id
         self._semantic_id = semantic_id
 
+    @property
+    def supplemental_semantic_id(self) -> ConstrainedList[Reference]:
+        return self._supplemental_semantic_id
+
+    @supplemental_semantic_id.setter
+    def supplemental_semantic_id(self, supplemental_semantic_id: Iterable[Reference]):
+        self._supplemental_semantic_id[:] = supplemental_semantic_id
+
 
 class Extension(HasSemantics):
     """
@@ -1075,6 +1341,9 @@ class Extension(HasSemantics):
     :ivar value: Value (:class:`~.ValueDataType`) of the extension
     :ivar refers_to: An iterable of :class:`~.ModelReference` to elements the extension refers to
     :ivar semantic_id: The semantic_id defined in the :class:`~.HasSemantics` class.
+    :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
+                                    supplemental semantic ID of the element. (inherited from
+                                    :class:`~aas.model.base.HasSemantics`)
     """
 
     def __init__(self,
@@ -1082,7 +1351,8 @@ class Extension(HasSemantics):
                  value_type: Optional[DataTypeDefXsd] = None,
                  value: Optional[ValueDataType] = None,
                  refers_to: Iterable[ModelReference] = (),
-                 semantic_id: Optional[Reference] = None):
+                 semantic_id: Optional[Reference] = None,
+                 supplemental_semantic_id: Iterable[Reference] = ()):
         super().__init__()
         self.parent: Optional[HasExtension] = None
         self._name: str
@@ -1092,6 +1362,7 @@ class Extension(HasSemantics):
         self.value = value
         self.refers_to: Iterable[ModelReference] = refers_to
         self.semantic_id: Optional[Reference] = semantic_id
+        self.supplemental_semantic_id: ConstrainedList[Reference] = ConstrainedList(supplemental_semantic_id)
 
     def __repr__(self) -> str:
         return "Extension(name={})".format(self.name)
@@ -1207,6 +1478,9 @@ class Qualifier(HasSemantics):
     :ivar value: The value (:class:`~.ValueDataType`) of the qualifier.
     :ivar value_id: :class:`~.Reference` to the global unique id of a coded value.
     :ivar semantic_id: The semantic_id defined in :class:`~.HasSemantics`.
+    :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
+                                    supplemental semantic ID of the element. (inherited from
+                                    :class:`~aas.model.base.HasSemantics`)
     """
 
     def __init__(self,
@@ -1214,7 +1488,9 @@ class Qualifier(HasSemantics):
                  value_type: DataTypeDefXsd,
                  value: Optional[ValueDataType] = None,
                  value_id: Optional[Reference] = None,
-                 semantic_id: Optional[Reference] = None):
+                 kind: QualifierKind = QualifierKind.CONCEPT_QUALIFIER,
+                 semantic_id: Optional[Reference] = None,
+                 supplemental_semantic_id: Iterable[Reference] = ()):
         """
         TODO: Add instruction what to do after construction
         """
@@ -1225,7 +1501,9 @@ class Qualifier(HasSemantics):
         self.value_type: DataTypeDefXsd = value_type
         self._value: Optional[ValueDataType] = datatypes.trivial_cast(value, value_type) if value is not None else None
         self.value_id: Optional[Reference] = value_id
+        self.kind: QualifierKind = kind
         self.semantic_id: Optional[Reference] = semantic_id
+        self.supplemental_semantic_id: ConstrainedList[Reference] = ConstrainedList(supplemental_semantic_id)
 
     def __repr__(self) -> str:
         return "Qualifier(type={})".format(self.type)
@@ -1276,9 +1554,9 @@ class ValueReferencePair:
     """
 
     def __init__(self,
-                 value_type: DataTypeDefXsd,
                  value: ValueDataType,
-                 value_id: Reference):
+                 value_id: Reference,
+                 value_type: Optional[DataTypeDefXsd] = None):
         """
 
 
@@ -1286,7 +1564,7 @@ class ValueReferencePair:
         """
         self.value_type: DataTypeDefXsd = value_type
         self.value_id: Reference = value_id
-        self._value: ValueDataType = datatypes.trivial_cast(value, value_type)
+        self._value: ValueDataType = datatypes.trivial_cast(value, value_type) if value_type else value
 
     @property
     def value(self):
@@ -1297,7 +1575,7 @@ class ValueReferencePair:
         if value is None:
             raise AttributeError('Value can not be None')
         else:
-            self._value = datatypes.trivial_cast(value, self.value_type)
+            self._value = datatypes.trivial_cast(value, self.value_type) if self.value_type else value
 
     def __repr__(self) -> str:
         return "ValueReferencePair(value_type={}, value={}, value_id={})".format(self.value_type,
@@ -1322,6 +1600,7 @@ class UniqueIdShortNamespace(Namespace, metaclass=abc.ABCMeta):
     """
     @abc.abstractmethod
     def __init__(self) -> None:
+        super().__init__()
         self.namespace_element_sets: List[NamespaceSet] = []
 
     def get_referable(self, id_short: str) -> Referable:
@@ -1376,6 +1655,7 @@ class UniqueSemanticIdNamespace(Namespace, metaclass=abc.ABCMeta):
     """
     @abc.abstractmethod
     def __init__(self) -> None:
+        super().__init__()
         self.namespace_element_sets: List[NamespaceSet] = []
 
     def get_object_by_semantic_id(self, semantic_id: Reference) -> HasSemantics:
@@ -1720,14 +2000,21 @@ class SpecificAssetId(HasSemantics):
     :ivar name: Key of the identifier
     :ivar value: The value of the identifier with the corresponding key.
     :ivar external_subject_id: The (external) subject the key belongs to or has meaning to.
-    :ivar semantic_id: The semantic_id defined in the :class:`~.HasSemantics` class.
+    :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
+                       element. The semantic id may either reference an external global id or it may reference a
+                       referable model element of kind=Type that defines the semantics of the element.
+                       (inherited from :class:`~aas.model.base.HasSemantics`)
+    :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
+                                    supplemental semantic ID of the element. (inherited from
+                                    :class:`~aas.model.base.HasSemantics`)
     """
 
     def __init__(self,
                  name: str,
                  value: str,
                  external_subject_id: GlobalReference,
-                 semantic_id: Optional[Reference] = None):
+                 semantic_id: Optional[Reference] = None,
+                 supplemental_semantic_id: Iterable[Reference] = ()):
         super().__init__()
         if name == "":
             raise ValueError("name is not allowed to be an empty string")
@@ -1741,6 +2028,7 @@ class SpecificAssetId(HasSemantics):
         super().__setattr__('value', value)
         super().__setattr__('external_subject_id', external_subject_id)
         super().__setattr__('semantic_id', semantic_id)
+        super().__setattr__('supplemental_semantic_id', supplemental_semantic_id)
 
     def __setattr__(self, key, value):
         """Prevent modification of attributes."""
@@ -1748,7 +2036,7 @@ class SpecificAssetId(HasSemantics):
         # HasSemantics.__init__ sets the parent attribute to None, so that has to be possible. It needs to be set
         # because its value is checked in the semantic_id setter and since every subclass of HasSemantics is expected
         # to have this attribute. Additionally, the protected _semantic_id attribute must be settable.
-        if key == '_semantic_id' or (key == 'parent' and value is None):
+        if key == '_semantic_id' or key == '_supplemental_semantic_id' or (key == 'parent' and value is None):
             return super(HasSemantics, self).__setattr__(key, value)
         raise AttributeError('SpecificAssetId is immutable')
 
@@ -1758,14 +2046,17 @@ class SpecificAssetId(HasSemantics):
         return (self.name == other.name
                 and self.value == other.value
                 and self.external_subject_id == other.external_subject_id
-                and self.semantic_id == other.semantic_id)
+                and self.semantic_id == other.semantic_id
+                and self.supplemental_semantic_id == other.supplemental_semantic_id)
 
     def __hash__(self):
         return hash((self.name, self.value, self.external_subject_id))
 
     def __repr__(self) -> str:
-        return "SpecificAssetId(key={}, value={}, external_subject_id={})".format(self.name, self.value,
-                                                                                  self.external_subject_id)
+        return "SpecificAssetId(key={}, value={}, external_subject_id={}, " \
+               "semantic_id={}, supplemental_semantic_id={})".format(
+            self.name, self.value, self.external_subject_id, self.semantic_id,
+            self.supplemental_semantic_id)
 
 
 class AASConstraintViolation(Exception):
@@ -1780,3 +2071,222 @@ class AASConstraintViolation(Exception):
         self.constraint_id: int = constraint_id
         self.message: str = message + " (Constraint AASd-" + str(constraint_id).zfill(3) + ")"
         super().__init__(self.message)
+
+
+@unique
+class IEC61360DataType(Enum):
+    """
+    Data types for data_type in :class:`DataSpecificationIEC61360 <.IEC61360ConceptDescription>`
+    The data types are:
+
+    :cvar DATE:
+    :cvar STRING:
+    :cvar STRING_TRANSLATABLE:
+    :cvar REAL_MEASURE:
+    :cvar REAL_COUNT:
+    :cvar REAL_CURRENCY:
+    :cvar BOOLEAN:
+    :cvar URL:
+    :cvar RATIONAL:
+    :cvar RATIONAL_MEASURE:
+    :cvar TIME:
+    :cvar TIMESTAMP:
+    """
+    DATE = 0
+    STRING = 1
+    STRING_TRANSLATABLE = 2
+    REAL_MEASURE = 3
+    REAL_COUNT = 4
+    REAL_CURRENCY = 5
+    BOOLEAN = 6
+    URL = 7
+    RATIONAL = 8
+    RATIONAL_MEASURE = 9
+    TIME = 10
+    TIMESTAMP = 11
+
+
+@unique
+class IEC61360LevelType(Enum):
+    """
+    Level types for the level_type in :class:`DataSpecificationIEC61360 <.IEC61360ConceptDescription>`
+    The level types are:
+
+    :cvar MIN:
+    :cvar MAX:
+    :cvar NOM:
+    :cvar TYP:
+    """
+    MIN = 0
+    MAX = 1
+    NOM = 2
+    TYP = 3
+
+
+class DataSpecificationIEC61360(DataSpecificationContent):
+    """
+    A specialized :class:`~.DataSpecificationContent` to define specs according to IEC61360
+
+    :ivar preferred_name: Preferred name of the data object
+    :ivar short_name: Short name of the data object
+    :ivar data_type: Data type of the data object
+    :ivar definition: Definition of the data object
+    :ivar parent: Reference to the next referable parent element of the element.
+                  (inherited from :class:`~aas.model.base.Referable`)
+    :ivar unit: Optional unit of the data object
+    :ivar unit_id: Optional reference to a unit id
+    :ivar source_of_definition: Optional source of the definition
+    :ivar symbol: Optional unit symbol
+    :ivar value_format: Optional format of the values
+    :ivar value_list: Optional list of values
+    :ivar value: Optional value data type object
+    :ivar value_id: Optional reference to the value
+    :ivar level_types: Optional set of level types of the DataSpecificationContent
+    """
+    def __init__(self,
+                 preferred_name: LangStringSet,
+                 data_type: Optional[IEC61360DataType] = None,
+                 definition: Optional[LangStringSet] = None,
+                 short_name: Optional[LangStringSet] = None,
+                 parent: Optional[UniqueIdShortNamespace] = None,
+                 unit: Optional[str] = None,
+                 unit_id: Optional[Reference] = None,
+                 source_of_definition: Optional[str] = None,
+                 symbol: Optional[str] = None,
+                 value_format: Optional[str] = None,
+                 value_list: Optional[ValueList] = None,
+                 value: Optional[ValueDataType] = None,
+                 value_id: Optional[Reference] = None,
+                 level_types: Optional[Set[IEC61360LevelType]] = None):
+
+        super().__init__()
+        self.preferred_name: LangStringSet = preferred_name
+        self.short_name: Optional[LangStringSet] = short_name
+        self.data_type: Optional[IEC61360DataType] = data_type
+        self.definition: Optional[LangStringSet] = definition
+        self._unit: Optional[str] = unit
+        self.unit_id: Optional[Reference] = unit_id
+        self._source_of_definition: Optional[str] = source_of_definition
+        self._symbol: Optional[str] = symbol
+        self.value_list: Optional[ValueList] = value_list
+        self.value_id: Optional[Reference] = value_id
+        self.level_types: Set[IEC61360LevelType] = level_types if level_types else set()
+        self.value_format: Optional[str] = value_format
+        self._value: Optional[ValueDataType] = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value) -> None:
+        self._value = value
+        # if value is None or self.value_format is None:
+        #     self._value = None
+        # else:
+        #     self._value = datatypes.trivial_cast(value, self.value_format)
+
+    def _set_unit(self, unit: Optional[str]):
+        """
+        Check the input string
+
+        Constraint AASd-100: An attribute with data type "string" is not allowed to be empty
+
+        :param unit: unit of the data object (optional)
+        :raises ValueError: if the constraint is not fulfilled
+        """
+        if unit == "":
+            raise ValueError("unit is not allowed to be an empty string")
+        self._unit = unit
+
+    def _get_unit(self):
+        return self._unit
+
+    unit = property(_get_unit, _set_unit)
+
+    def _set_source_of_definition(self, source_of_definition: Optional[str]):
+        """
+        Check the input string
+
+        Constraint AASd-100: An attribute with data type "string" is not allowed to be empty
+
+        :param source_of_definition: source of the definition (optional)
+        :raises ValueError: if the constraint is not fulfilled
+        """
+        if source_of_definition == "":
+            raise ValueError("source_of_definition is not allowed to be an empty string")
+        self._source_of_definition = source_of_definition
+
+    def _get_source_of_definition(self):
+        return self._source_of_definition
+
+    source_of_definition = property(_get_source_of_definition, _set_source_of_definition)
+
+    def _set_symbol(self, symbol: Optional[str]):
+        """
+        Check the input string
+
+        Constraint AASd-100: An attribute with data type "string" is not allowed to be empty
+
+        :param symbol: unit symbol (optional)
+        :raises ValueError: if the constraint is not fulfilled
+        """
+        if symbol == "":
+            raise ValueError("symbol is not allowed to be an empty string")
+        self._symbol = symbol
+
+    def _get_symbol(self):
+        return self._symbol
+
+    symbol = property(_get_symbol, _set_symbol)
+
+
+class DataSpecificationPhysicalUnit(DataSpecificationContent):
+    """
+    A specialized :class:`~.DataSpecificationContent` to define descriptions 
+    for physical units conformant to IEC 61360.
+
+    :ivar unit_name: Name of the physical unit
+    :ivar unit_symbol: Symbol for the physical unit
+    :ivar definition: Definition in different languages
+    :ivar SI_notation: Notation of SI physical unit
+    :ivar SI_name: Name of SI physical unit
+    :ivar DIN_notation: Notation of physical unit conformant to DIN
+    :ivar ECE_name: Name of physical unit conformant to ECE
+    :ivar ECE_code: Code of physical unit conformant to ECE
+    :ivar NIST_name: Name of NIST physical unit
+    :ivar source_of_definition: Source of definition
+    :ivar conversion_factor: Conversion factor
+    :ivar registration_authority_id: Registration authority ID
+    :ivar supplier: Supplier
+    """
+
+    def __init__(
+        self,
+        unit_name: str,
+        unit_symbol: str,
+        definition: LangStringSet,
+        si_notation: Optional[str] = None,
+        si_name: Optional[str] = None,
+        din_notation: Optional[str] = None,
+        ece_name: Optional[str] = None,
+        ece_code: Optional[str] = None,
+        nist_name: Optional[str] = None,
+        source_of_definition: Optional[str] = None,
+        conversion_factor: Optional[str] = None,
+        registration_authority_id: Optional[str] = None,
+        supplier: Optional[str] = None,
+    ) -> None:
+        self.unit_name = unit_name
+        self.unit_symbol = unit_symbol
+        self.definition = definition
+        self.SI_notation = si_notation
+        self.SI_name = si_name
+        self.DIN_notation = din_notation
+        self.ECE_name = ece_name
+        self.ECE_code = ece_code
+        self.NIST_name = nist_name
+        self.source_of_definition = source_of_definition
+        self.conversion_factor = conversion_factor
+        self.registration_authority_id = registration_authority_id
+        self.supplier = supplier

@@ -618,6 +618,13 @@ class AASDataChecker(DataChecker):
         self._check_abstract_attributes_submodel_element_equal(object_, expected_value)
         self._check_event_element_equal(object_, expected_value)
         self.check_attribute_equal(object_, 'observed', expected_value.observed)
+        self.check_attribute_equal(object_, 'direction', expected_value.direction)
+        self.check_attribute_equal(object_, 'state', expected_value.state)
+        self.check_attribute_equal(object_, 'message_topic', expected_value.message_topic)
+        self.check_attribute_equal(object_, 'message_broker', expected_value.message_broker)
+        self.check_attribute_equal(object_, 'last_update', expected_value.last_update)
+        self.check_attribute_equal(object_, 'min_interval', expected_value.min_interval)
+        self.check_attribute_equal(object_, 'max_interval', expected_value.max_interval)
 
     def check_submodel_equal(self, object_: model.Submodel, expected_value: model.Submodel):
         """
@@ -754,12 +761,25 @@ class AASDataChecker(DataChecker):
                                             'is case of references'.format(repr(object_)),
                    value=found_elements)
 
-        if isinstance(expected_value, model.IEC61360ConceptDescription):
-            if self.check_is_instance(object_, model.IEC61360ConceptDescription):
-                self._check_iec61360_concept_description_equal(object_, expected_value)  # type: ignore
+    def check_data_specification_content_equal(
+            self, object_: model.DataSpecificationContent,
+            expected_value: model.DataSpecificationContent):
+        """
+        Checks if the given DataSpecificationContent objects are equal
 
-    def _check_iec61360_concept_description_equal(self, object_: model.IEC61360ConceptDescription,
-                                                  expected_value: model.IEC61360ConceptDescription):
+        :param object_: Given DataSpecificationContent object to check
+        :param expected_value: expected DataSpecificationContent object
+        :return:
+        """
+        self.check(type(object_) == type(expected_value), "type({}) must be == type({})"
+                   .format(repr(object_), repr(expected_value)))
+        if isinstance(object_, model.base.DataSpecificationIEC61360):
+            self._check_iec61360_data_specification_equal(object_, expected_value)
+        elif isinstance(object_, model.base.DataSpecificationPhysicalUnit):
+            self._check_physical_unit_data_specification_equal(object_, expected_value)
+
+    def _check_iec61360_data_specification_equal(self, object_: model.base.DataSpecificationIEC61360,
+                                                  expected_value: model.base.DataSpecificationIEC61360):
         """
         Checks if the given IEC61360ConceptDescription objects are equal
 
@@ -790,6 +810,30 @@ class AASDataChecker(DataChecker):
             if self.check(expected_value.value_list is not None,
                           "ValueList must contain 0 ValueReferencePairs", value=len(object_.value_list)):
                 self._check_value_list_equal(object_.value_list, expected_value.value_list)  # type: ignore
+
+    def _check_physical_unit_data_specification_equal(
+            self, object_: model.base.DataSpecificationPhysicalUnit,
+            expected_value: model.base.DataSpecificationPhysicalUnit):
+        """
+        Checks if the given DataSpecificationPhysicalUnit objects are equal
+
+        :param object_: Given DataSpecificationPhysicalUnit object to check
+        :param expected_value: expected DataSpecificationPhysicalUnit object
+        :return:
+        """
+        self.check_attribute_equal(object_, 'unit_name', expected_value.unit_name)
+        self.check_attribute_equal(object_, 'unit_symbol', expected_value.unit_symbol)
+        self.check_attribute_equal(object_, 'definition', expected_value.definition)
+        self.check_attribute_equal(object_, 'si_notation', expected_value.SI_notation)
+        self.check_attribute_equal(object_, 'si_name', expected_value.SI_name)
+        self.check_attribute_equal(object_, 'din_notation', expected_value.DIN_notation)
+        self.check_attribute_equal(object_, 'ece_name', expected_value.ECE_name)
+        self.check_attribute_equal(object_, 'ece_code', expected_value.ECE_code)
+        self.check_attribute_equal(object_, 'nist_name', expected_value.NIST_name)
+        self.check_attribute_equal(object_, 'source_of_definition', expected_value.source_of_definition)
+        self.check_attribute_equal(object_, 'conversion_factor', expected_value.conversion_factor)
+        self.check_attribute_equal(object_, 'registration_authority_id', expected_value.registration_authority_id)
+        self.check_attribute_equal(object_, 'supplier', expected_value.supplier)
 
     def _check_value_list_equal(self, object_: model.ValueList, expected_value: model.ValueList):
         """

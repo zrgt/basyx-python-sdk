@@ -84,6 +84,7 @@ def generate_example_referable_tree() -> model.Referable:
 
     :return: example_referable
     """
+
     def generate_example_referable_with_namespace(id_short: str,
                                                   child: Optional[model.Referable] = None) -> model.Referable:
         """
@@ -468,6 +469,7 @@ class ModelNamespaceTest(unittest.TestCase):
                     # Create a new list to prevent an error when checking the assertions:
                     # RuntimeError: dictionary changed size during iteration
                     existing_items = list(existing)
+
                 super().__init__()
                 self.set1 = model.NamespaceSet(self, [('id_short', True)], items, dummy_hook)
 
@@ -936,7 +938,9 @@ class ExtensionTest(unittest.TestCase):
 
 class ValueReferencePairTest(unittest.TestCase):
     def test_set_value(self):
-        pair = model.ValueReferencePair(model.datatypes.Int, 2, model.GlobalReference(
+        pair = model.ValueReferencePair(
+            value_type=model.datatypes.Int,
+            value=2, value_id=model.GlobalReference(
             (model.Key(model.KeyTypes.GLOBAL_REFERENCE, 'test'),)))
         self.assertEqual(pair.value, 2)
         with self.assertRaises(AttributeError) as cm:
@@ -944,3 +948,146 @@ class ValueReferencePairTest(unittest.TestCase):
         self.assertEqual('Value can not be None', str(cm.exception))
         pair.value = 3
         self.assertEqual(pair.value, 3)
+
+
+class HasSemanticsTest(unittest.TestCase):
+    def test_supplemental_semantic_id_constraint(self) -> None:
+        extension = model.Extension(name='test')
+        key: model.Key = model.Key(model.KeyTypes.GLOBAL_REFERENCE, "global_reference")
+        ref_sem_id: model.Reference = model.GlobalReference((key, ))
+        ref1: model.Reference = model.GlobalReference((key, ))
+
+        with self.assertRaises(model.AASConstraintViolation) as cm:
+            extension.supplemental_semantic_id.append(ref1)
+        self.assertEqual(cm.exception.constraint_id, 118)
+        self.assertEqual('A semantic_id must be defined before adding a supplemental_semantic_id! '
+                         '(Constraint AASd-118)', str(cm.exception))
+        extension.semantic_id = ref_sem_id
+        extension.supplemental_semantic_id.append(ref1)
+
+        with self.assertRaises(model.AASConstraintViolation) as cm:
+            extension.semantic_id = None
+        self.assertEqual(cm.exception.constraint_id, 118)
+        self.assertEqual('semantic_id can not be removed while there is at least one supplemental_semantic_id: '
+                         '[GlobalReference(key=(Key(type=GLOBAL_REFERENCE, value=global_reference),))] '
+                         '(Constraint AASd-118)', str(cm.exception))
+        extension.supplemental_semantic_id.clear()
+        extension.semantic_id = None
+
+
+class ConstrainedListTest(unittest.TestCase):
+    def test_length(self) -> None:
+        c_list: model.ConstrainedList[int] = model.ConstrainedList([1, 2])
+        self.assertEqual(len(c_list), 2)
+        c_list.append(1)
+        self.assertEqual(len(c_list), 3)
+        c_list.clear()
+        self.assertEqual(len(c_list), 0)
+
+    def test_contains(self) -> None:
+        c_list: model.ConstrainedList[int] = model.ConstrainedList([1, 2])
+        self.assertIn(1, c_list)
+        self.assertNotIn(3, c_list)
+        c_list.append(3)
+        self.assertIn(3, c_list)
+
+    def test_hooks(self) -> None:
+        new: Optional[int] = None
+        old_items: List[int] = []
+        new_items: List[int] = []
+        existing_items: List[int] = []
+
+        def add_hook(itm: int, list_: List[int]) -> None:
+            nonlocal new, existing_items
+            new = itm
+            # Copy list, otherwise we just store a reference to the same lists and the tests are meaningless.
+            existing_items = list_.copy()
+
+        def set_hook(old: List[int], new: List[int], list_: List[int]) -> None:
+            nonlocal old_items, new_items, existing_items
+            # Copy list, otherwise we just store a reference to the same lists and the tests are meaningless.
+            old_items = old.copy()
+            new_items = new.copy()
+            existing_items = list_.copy()
+
+        def del_hook(itm: int, list_: List[int]) -> None:
+            nonlocal new, existing_items
+            new = itm
+            # Copy list, otherwise we just store a reference to the same lists and the tests are meaningless.
+            existing_items = list_.copy()
+
+        self.assertIsNone(new)
+        self.assertEqual(len(existing_items), 0)
+
+        c_list: model.ConstrainedList[int] = model.ConstrainedList([1, 2, 3], item_add_hook=add_hook,
+                                                                   item_set_hook=set_hook,
+                                                                   item_del_hook=del_hook)
+        check_list: List[int] = [1, 2, 3]
+
+        self.assertEqual(new, 3)
+        self.assertEqual(existing_items, [1, 2])
+        self.assertEqual(c_list, check_list)
+
+        # add hook test
+        c_list.append(4)
+        self.assertEqual(new, 4)
+        self.assertEqual(existing_items, [1, 2, 3])
+        check_list.append(4)
+        self.assertEqual(c_list, check_list)
+
+        c_list.extend([10, 11])
+        self.assertEqual(new, 11)
+        self.assertEqual(existing_items, [1, 2, 3, 4, 10])
+        check_list.extend([10, 11])
+        self.assertEqual(c_list, check_list)
+
+        c_list.insert(2, 20)
+        self.assertEqual(new, 20)
+        self.assertEqual(existing_items, [1, 2, 3, 4, 10, 11])
+        check_list.insert(2, 20)
+        self.assertEqual(c_list, check_list)
+
+        # set hook test
+        c_list[2] = 40
+        self.assertEqual(old_items, [20])
+        self.assertEqual(new_items, [40])
+        self.assertEqual(existing_items, [1, 2, 20, 3, 4, 10, 11])
+        check_list[2] = 40
+        self.assertEqual(c_list, check_list)
+
+        c_list[2:4] = [2, 3]
+        self.assertEqual(old_items, [40, 3])
+        self.assertEqual(new_items, [2, 3])
+        self.assertEqual(existing_items, [1, 2, 40, 3, 4, 10, 11])
+        check_list[2:4] = [2, 3]
+        self.assertEqual(c_list, check_list)
+
+        c_list[:] = []
+        self.assertEqual(old_items, [1, 2, 2, 3, 4, 10, 11])
+        self.assertEqual(new_items, [])
+        self.assertEqual(existing_items, [1, 2, 2, 3, 4, 10, 11])
+        check_list[:] = []
+        self.assertEqual(c_list, check_list)
+
+        c_list[:] = [1, 2, 20, 3, 4, 10, 11]
+        self.assertEqual(old_items, [])
+        self.assertEqual(new_items, [1, 2, 20, 3, 4, 10, 11])
+        self.assertEqual(existing_items, [])
+        check_list[:] = [1, 2, 20, 3, 4, 10, 11]
+        self.assertEqual(c_list, check_list)
+
+        # del hook test
+        c_list.remove(20)
+        self.assertEqual(new, 20)
+        self.assertEqual(existing_items, [1, 2, 20, 3, 4, 10, 11])
+        check_list.remove(20)
+        self.assertEqual(c_list, check_list)
+
+        with self.assertRaises(ValueError):
+            c_list.remove(20)
+
+        c_list.pop()
+        self.assertEqual(new, 11)
+        self.assertEqual(existing_items, [1, 2, 3, 4, 10, 11])
+        check_list.pop()
+        self.assertEqual(c_list, check_list)
