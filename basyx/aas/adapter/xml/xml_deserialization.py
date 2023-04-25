@@ -448,11 +448,17 @@ class AASFromXmlDecoder:
                 if len(constraint) == 0:
                     continue
                 if len(constraint) > 1:
-                    logger.warning(f"{_element_pretty_identifier(constraint)} has more than one constraint, "
-                                   "using the first one...")
-                constructed = _failsafe_construct(constraint[0], cls.construct_constraint, cls.failsafe)
-                if constructed is not None:
-                    obj.qualifier.add(constructed)
+                    logger.warning(
+                        f"{_element_pretty_identifier(constraint)} has more than one constraint. "
+                        f"It is not compliant to the XML Schema!")
+                    for c in constraint:
+                        constructed = _failsafe_construct(c, cls.construct_constraint, cls.failsafe)
+                        if constructed is not None:
+                            obj.qualifier.add(constructed)
+                else:
+                    constructed = _failsafe_construct(constraint[0], cls.construct_constraint, cls.failsafe)
+                    if constructed is not None:
+                        obj.qualifier.add(constructed)
 
     @classmethod
     def _construct_relationship_element_internal(cls, element: etree.Element, object_class: Type[RE], **_kwargs: Any) \
