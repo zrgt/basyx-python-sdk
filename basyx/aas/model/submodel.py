@@ -749,7 +749,7 @@ class SubmodelElementList(SubmodelElement, base.UniqueIdShortNamespace, Generic[
         # We can't use isinstance(new, self.type_value_list_element) here, because each subclass of
         # self.type_value_list_element wouldn't raise a ConstraintViolation, when it should.
         # Example: AnnotatedRelationshipElement is a subclass of RelationshipElement
-        if type(new) is not self.type_value_list_element:
+        if not isinstance(new, self.type_value_list_element):
             raise base.AASConstraintViolation(108, "All first level elements must be of the type specified in "
                                                    f"type_value_list_element={self.type_value_list_element.__name__}, "
                                                    f"got {new!r}")
