@@ -29,11 +29,8 @@ BlobType = bytes
 ContentType = str  # any mimetype as in RFC2046
 PathType = str
 QualifierType = str
-# A dict of language-Identifier (according to ISO 639-1 and ISO 3166-1) and string in this language.
-# The meaning of the string in each language is the same.
-# << Data Type >> Example ["en-US", "germany"]
-
 Identifier = str
+ValueList = Set["ValueReferencePair"]
 
 
 @unique
@@ -74,6 +71,7 @@ class KeyTypes(Enum):
     :cvar RELATIONSHIP_ELEMENT: :class:`~aas.model.submodel.RelationshipElement`
     :cvar SUBMODEL_ELEMENT: :class:`~aas.model.submodel.SubmodelElement`
     :cvar SUBMODEL_ELEMENT_COLLECTION: :class:`~aas.model.submodel.SubmodelElementCollection`
+    :cvar SUBMODEL_ELEMENT_LIST: :class:`~aas.model.submodel.SubmodelElementList`
 
     **KeyTypes starting from 2000**
 
@@ -227,8 +225,10 @@ class QualifierKind(Enum):
     Enumeration for denoting whether a Qualifier is a concept, template or value qualifier.
 
     :cvar CONCEPT_QUALIFIER: qualifies the semantic definition the element is referring to (HasSemantics/semanticId)
-    :cvar TEMPLATE_QUALIFIER: qualifies the elements within a specific submodel on concept level. Template qualifiers are only applicable to elements with kind=„Template”
-    :cvar VALUE_QUALIFIER: qualifies the value of the element and can change during run-time. Value qualifiers are only applicable to elements with kind=„Instance”
+    :cvar TEMPLATE_QUALIFIER: qualifies the elements within a specific submodel on concept level. Template qualifiers
+                              are only applicable to elements with kind="Template"
+    :cvar VALUE_QUALIFIER: qualifies the value of the element and can change during run-time. Value qualifiers are only
+                           applicable to elements with kind="Instance"
     """
 
     CONCEPT_QUALIFIER = 0
@@ -267,13 +267,13 @@ class LangStringSet(MutableMapping[str, str]):
     ISO 3166 and ISO 15924.
     """
     def __init__(self, dict_: Dict[str, str]):
-        self.dict: MutableMapping[str, str] = {}
+        self._dict: Dict[str, str] = {}
 
         if len(dict_) < 1:
             raise ValueError(f"A {self.__class__.__name__} must not be empty!")
         for ltag in dict_:
             self._check_language_tag_constraints(ltag)
-            self.dict[ltag] = dict_[ltag]
+            self._dict[ltag] = dict_[ltag]
 
     @classmethod
     def _check_language_tag_constraints(cls, ltag: str):
@@ -286,22 +286,22 @@ class LangStringSet(MutableMapping[str, str]):
                              "two upper-case letters!")
 
     def __getitem__(self, item: str) -> str:
-        return self.dict[item]
+        return self._dict[item]
 
     def __setitem__(self, key: str, value: str) -> None:
         self._check_language_tag_constraints(key)
-        self.dict[key] = value
+        self._dict[key] = value
 
     def __delitem__(self, key: str) -> None:
-        if len(self.dict) == 1:
+        if len(self._dict) == 1:
             raise KeyError(f"A {self.__class__.__name__} must not be empty!")
-        del self.dict[key]
+        del self._dict[key]
 
     def __iter__(self) -> Iterator[str]:
-        return iter(self.dict)
+        return iter(self._dict)
 
     def __len__(self) -> int:
-        return len(self.dict)
+        return len(self._dict)
 
     def __repr__(self) -> str:
         return self.__class__.__name__ + "(" + ", ".join(f'{k}="{v}"' for k, v in self.items()) + ")"
@@ -389,6 +389,7 @@ class Key:
                 raise ValueError(f"Object {referable!r} is not contained within its parent {referable.parent!r}") from e
         else:
             return Key(key_type, referable.id_short)
+
 
 _NSO = TypeVar('_NSO', bound=Union["Referable", "Qualifier", "HasSemantics", "Extension"])
 
@@ -1025,6 +1026,9 @@ class Resource:
         self.path: PathType = path
         self.content_type: Optional[ContentType] = content_type
 
+    def __repr__(self):
+        return f"Resource[{self.path}]"
+
 
 class DataSpecificationContent:
     """
@@ -1053,11 +1057,14 @@ class EmbeddedDataSpecification:
     """
     def __init__(
         self,
-        data_specification: Reference,
+        data_specification: GlobalReference,
         data_specification_content: DataSpecificationContent,
     ) -> None:
-        self.data_specification = data_specification
-        self.data_specification_content = data_specification_content
+        self.data_specification: GlobalReference = data_specification
+        self.data_specification_content: DataSpecificationContent = data_specification_content
+
+    def __repr__(self):
+        return f"EmbeddedDataSpecification[{self.data_specification}]"
 
 
 class HasDataSpecification(metaclass=abc.ABCMeta):
@@ -1068,12 +1075,12 @@ class HasDataSpecification(metaclass=abc.ABCMeta):
     element may or shall have. The data specifications used are explicitly specified
     with their global ID.
 
-    :ivar embedded_data_specifications: List of Embedded data specification.
+    :ivar embedded_data_specifications: List of :class:`~.EmbeddedDataSpecification`.
     """
     @abc.abstractmethod
     def __init__(
         self,
-        embedded_data_specifications: Iterable["EmbeddedDataSpecification"] = (),
+        embedded_data_specifications: Iterable[EmbeddedDataSpecification] = (),
     ) -> None:
         self.embedded_data_specifications = list(embedded_data_specifications)
 
@@ -1094,8 +1101,7 @@ class AdministrativeInformation(HasDataSpecification):
     def __init__(self,
                  version: Optional[str] = None,
                  revision: Optional[str] = None,
-                 embedded_data_specifications: Iterable[EmbeddedDataSpecification]
-                 = ()):
+                 embedded_data_specifications: Iterable[EmbeddedDataSpecification] = ()):
         """
         Initializer of AdministrativeInformation
 
@@ -1108,8 +1114,7 @@ class AdministrativeInformation(HasDataSpecification):
         self.version = version
         self._revision: Optional[str]
         self.revision = revision
-        self.embedded_data_specifications: Iterable[EmbeddedDataSpecification] \
-            = list(embedded_data_specifications)
+        self.embedded_data_specifications: List[EmbeddedDataSpecification] = list(embedded_data_specifications)
 
     def _get_version(self):
         return self._version
@@ -1292,7 +1297,6 @@ class HasSemantics(metaclass=abc.ABCMeta):
         self._supplemental_semantic_id: ConstrainedList[Reference] = ConstrainedList(
             [], item_add_hook=self._check_constraint_add)
         self._semantic_id: Optional[Reference] = None
-        self._supplemental_semantic_id: List[Reference] = []
 
     def _check_constraint_add(self, _new: Reference, _list: List[Reference]) -> None:
         if self.semantic_id is None:
@@ -1556,7 +1560,7 @@ class ValueReferencePair:
     def __init__(self,
                  value: ValueDataType,
                  value_id: Reference,
-                 value_type: Optional[DataTypeDefXsd] = None):
+                 value_type: DataTypeDefXsd = datatypes.String):
         """
 
 
@@ -1564,7 +1568,7 @@ class ValueReferencePair:
         """
         self.value_type: DataTypeDefXsd = value_type
         self.value_id: Reference = value_id
-        self._value: ValueDataType = datatypes.trivial_cast(value, value_type) if value_type else value
+        self._value: ValueDataType = datatypes.trivial_cast(value, value_type)
 
     @property
     def value(self):
@@ -1575,15 +1579,12 @@ class ValueReferencePair:
         if value is None:
             raise AttributeError('Value can not be None')
         else:
-            self._value = datatypes.trivial_cast(value, self.value_type) if self.value_type else value
+            self._value = datatypes.trivial_cast(value, self.value_type)
 
     def __repr__(self) -> str:
         return "ValueReferencePair(value_type={}, value={}, value_id={})".format(self.value_type,
                                                                                  self.value,
                                                                                  self.value_id)
-
-
-ValueList = Set[ValueReferencePair]
 
 
 class UniqueIdShortNamespace(Namespace, metaclass=abc.ABCMeta):
@@ -2054,9 +2055,9 @@ class SpecificAssetId(HasSemantics):
 
     def __repr__(self) -> str:
         return "SpecificAssetId(key={}, value={}, external_subject_id={}, " \
-               "semantic_id={}, supplemental_semantic_id={})".format(
-            self.name, self.value, self.external_subject_id, self.semantic_id,
-            self.supplemental_semantic_id)
+                "semantic_id={}, supplemental_semantic_id={})".format(
+                    self.name, self.value, self.external_subject_id, self.semantic_id,
+                    self.supplemental_semantic_id)
 
 
 class AASConstraintViolation(Exception):
@@ -2140,7 +2141,6 @@ class DataSpecificationIEC61360(DataSpecificationContent):
     :ivar value_format: Optional format of the values
     :ivar value_list: Optional list of values
     :ivar value: Optional value data type object
-    :ivar value_id: Optional reference to the value
     :ivar level_types: Optional set of level types of the DataSpecificationContent
     """
     def __init__(self,
@@ -2148,16 +2148,14 @@ class DataSpecificationIEC61360(DataSpecificationContent):
                  data_type: Optional[IEC61360DataType] = None,
                  definition: Optional[LangStringSet] = None,
                  short_name: Optional[LangStringSet] = None,
-                 parent: Optional[UniqueIdShortNamespace] = None,
                  unit: Optional[str] = None,
                  unit_id: Optional[Reference] = None,
                  source_of_definition: Optional[str] = None,
                  symbol: Optional[str] = None,
-                 value_format: Optional[str] = None,
+                 value_format: DataTypeDefXsd = datatypes.String,
                  value_list: Optional[ValueList] = None,
                  value: Optional[ValueDataType] = None,
-                 value_id: Optional[Reference] = None,
-                 level_types: Optional[Set[IEC61360LevelType]] = None):
+                 level_types: Iterable[IEC61360LevelType] = ()):
 
         super().__init__()
         self.preferred_name: LangStringSet = preferred_name
@@ -2169,10 +2167,10 @@ class DataSpecificationIEC61360(DataSpecificationContent):
         self._source_of_definition: Optional[str] = source_of_definition
         self._symbol: Optional[str] = symbol
         self.value_list: Optional[ValueList] = value_list
-        self.value_id: Optional[Reference] = value_id
-        self.level_types: Set[IEC61360LevelType] = level_types if level_types else set()
-        self.value_format: Optional[str] = value_format
-        self._value: Optional[ValueDataType] = value
+        self.level_types: Set[IEC61360LevelType] = set(level_types)
+        self.value_format: DataTypeDefXsd = value_format
+        self._value: Optional[ValueDataType] = datatypes.trivial_cast(value, self.value_format) if value is not None \
+            else None
 
     @property
     def value(self):
@@ -2180,11 +2178,10 @@ class DataSpecificationIEC61360(DataSpecificationContent):
 
     @value.setter
     def value(self, value) -> None:
-        self._value = value
-        # if value is None or self.value_format is None:
-        #     self._value = None
-        # else:
-        #     self._value = datatypes.trivial_cast(value, self.value_format)
+        if value is None or self.value_format is None:
+            self._value = None
+        else:
+            self._value = datatypes.trivial_cast(value, self.value_format)
 
     def _set_unit(self, unit: Optional[str]):
         """
@@ -2240,21 +2237,24 @@ class DataSpecificationIEC61360(DataSpecificationContent):
 
     symbol = property(_get_symbol, _set_symbol)
 
+    def __repr__(self):
+        return f"DataSpecificationIEC61360[unit={self.unit}]"
+
 
 class DataSpecificationPhysicalUnit(DataSpecificationContent):
     """
-    A specialized :class:`~.DataSpecificationContent` to define descriptions 
+    A specialized :class:`~.DataSpecificationContent` to define descriptions
     for physical units conformant to IEC 61360.
 
     :ivar unit_name: Name of the physical unit
     :ivar unit_symbol: Symbol for the physical unit
     :ivar definition: Definition in different languages
-    :ivar SI_notation: Notation of SI physical unit
-    :ivar SI_name: Name of SI physical unit
-    :ivar DIN_notation: Notation of physical unit conformant to DIN
-    :ivar ECE_name: Name of physical unit conformant to ECE
-    :ivar ECE_code: Code of physical unit conformant to ECE
-    :ivar NIST_name: Name of NIST physical unit
+    :ivar si_notation: Notation of SI physical unit
+    :ivar si_name: Name of SI physical unit
+    :ivar din_notation: Notation of physical unit conformant to DIN
+    :ivar ece_name: Name of physical unit conformant to ECE
+    :ivar ece_code: Code of physical unit conformant to ECE
+    :ivar nist_name: Name of NIST physical unit
     :ivar source_of_definition: Source of definition
     :ivar conversion_factor: Conversion factor
     :ivar registration_authority_id: Registration authority ID
@@ -2277,16 +2277,19 @@ class DataSpecificationPhysicalUnit(DataSpecificationContent):
         registration_authority_id: Optional[str] = None,
         supplier: Optional[str] = None,
     ) -> None:
-        self.unit_name = unit_name
-        self.unit_symbol = unit_symbol
-        self.definition = definition
-        self.SI_notation = si_notation
-        self.SI_name = si_name
-        self.DIN_notation = din_notation
-        self.ECE_name = ece_name
-        self.ECE_code = ece_code
-        self.NIST_name = nist_name
-        self.source_of_definition = source_of_definition
-        self.conversion_factor = conversion_factor
-        self.registration_authority_id = registration_authority_id
-        self.supplier = supplier
+        self.unit_name: str = unit_name
+        self.unit_symbol: str = unit_symbol
+        self.definition: LangStringSet = definition
+        self.si_notation: Optional[str] = si_notation
+        self.si_name: Optional[str] = si_name
+        self.din_notation: Optional[str] = din_notation
+        self.ece_name: Optional[str] = ece_name
+        self.ece_code: Optional[str] = ece_code
+        self.nist_name: Optional[str] = nist_name
+        self.source_of_definition: Optional[str] = source_of_definition
+        self.conversion_factor: Optional[str] = conversion_factor
+        self.registration_authority_id: Optional[str] = registration_authority_id
+        self.supplier: Optional[str] = supplier
+
+    def __repr__(self):
+        return f"DataSpecificationPhysicalUnit[unit_name={self.unit_name}]"

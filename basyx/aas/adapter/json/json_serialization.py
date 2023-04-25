@@ -28,7 +28,7 @@ conversion functions to handle all the attributes of abstract base classes.
 """
 import base64
 import inspect
-from typing import List, Dict, IO, Optional, Type
+from typing import List, Dict, IO, Optional, Type, Callable
 import json
 
 from basyx.aas import model
@@ -62,7 +62,7 @@ class AASToJsonEncoder(json.JSONEncoder):
         :param obj: The object to serialize to json
         :return: The serialized object
         """
-        mapping = {
+        mapping: Dict[Type, Callable] = {
             model.AdministrativeInformation: self._administrative_information_to_json,
             model.AnnotatedRelationshipElement: self._annotated_relationship_element_to_json,
             model.AssetAdministrationShell: self._asset_administration_shell_to_json,
@@ -71,6 +71,8 @@ class AASToJsonEncoder(json.JSONEncoder):
             model.Blob: self._blob_to_json,
             model.Capability: self._capability_to_json,
             model.ConceptDescription: self._concept_description_to_json,
+            model.DataSpecificationIEC61360: self._data_specification_iec61360_to_json,
+            model.DataSpecificationPhysicalUnit: self._data_specification_physical_unit_to_json,
             model.Entity: self._entity_to_json,
             model.Extension: self._extension_to_json,
             model.File: self._file_to_json,
@@ -113,7 +115,7 @@ class AASToJsonEncoder(json.JSONEncoder):
             if obj.embedded_data_specifications:
                 data['embeddedDataSpecifications'] = [
                     {'dataSpecification': spec.data_specification,
-                     'dataSpecificationContent': cls._data_specification_content_to_json(spec.data_specification_content)}
+                     'dataSpecificationContent': spec.data_specification_content}
                     for spec in obj.embedded_data_specifications
                 ]
 
@@ -259,8 +261,6 @@ class AASToJsonEncoder(json.JSONEncoder):
         :return: dict with the serialized attributes of this object
         """
         data = cls._abstract_classes_to_json(obj)
-        if obj.value_type:
-            data['valueType'] = model.datatypes.XSD_TYPE_NAMES[obj.value_type]
         data.update({'value': model.datatypes.xsd_repr(obj.value),
                      'valueId': obj.value_id})
         return data
@@ -325,25 +325,8 @@ class AASToJsonEncoder(json.JSONEncoder):
         return data
 
     @classmethod
-    def _data_specification_content_to_json(
-            cls, obj: model.base.DataSpecificationContent) -> None:
-        """
-        serialization of an object from class DataSpecificationContent to json
-
-        :param obj: object of class DataSpecificationContent
-        :return: dict with the serialized attributes of this object
-        """
-        if isinstance(obj, model.base.DataSpecificationIEC61360):
-            return cls._iec61360_specification_content_to_json(obj)
-        elif isinstance(obj, model.base.DataSpecificationPhysicalUnit):
-            return cls._iec61360_physical_unit_specification_content_to_json(obj)
-        else:
-            raise TypeError(f"For the given type there is no implemented serialization "
-                            f"yet: {type(obj)}")
-
-    @classmethod
-    def _iec61360_specification_content_to_json(
-            cls, obj: model.base.DataSpecificationIEC61360) -> None:
+    def _data_specification_iec61360_to_json(
+            cls, obj: model.base.DataSpecificationIEC61360) -> Dict[str, object]:
         """
         serialization of an object from class DataSpecificationIEC61360 to json
 
@@ -368,23 +351,18 @@ class AASToJsonEncoder(json.JSONEncoder):
             data_spec['sourceOfDefinition'] = obj.source_of_definition
         if obj.symbol is not None:
             data_spec['symbol'] = obj.symbol
-        if obj.value_format is not None:
-            data_spec['valueFormat'] = obj.value_format
+        data_spec['valueFormat'] = model.datatypes.XSD_TYPE_NAMES[obj.value_format]
         if obj.value_list is not None:
             data_spec['valueList'] = cls._value_list_to_json(obj.value_list)
         if obj.value is not None:
-            data_spec['value'] = obj.value
-            # data_spec['value'] = model.datatypes.xsd_repr(obj.value) if obj.value is not None else None
-        if obj.value_id is not None:
-            data_spec['valueId'] = obj.value_id
+            data_spec['value'] = model.datatypes.xsd_repr(obj.value) if obj.value is not None else None
         if obj.level_types:
-            # TODO fix in V3.0
-            data_spec['levelType'] = [_generic.IEC61360_LEVEL_TYPES[lt] for lt in obj.level_types][0]
+            data_spec['levelType'] = {v: k in obj.level_types for k, v in _generic.IEC61360_LEVEL_TYPES.items()}
         return data_spec
 
     @classmethod
-    def _iec61360_physical_unit_specification_content_to_json(
-            cls, obj: model.base.DataSpecificationPhysicalUnit) -> None:
+    def _data_specification_physical_unit_to_json(
+            cls, obj: model.base.DataSpecificationPhysicalUnit) -> Dict[str, object]:
         """
         serialization of an object from class DataSpecificationPhysicalUnit to json
 
@@ -397,18 +375,18 @@ class AASToJsonEncoder(json.JSONEncoder):
             'unitSymbol': obj.unit_symbol,
             'definition': cls._lang_string_set_to_json(obj.definition)
         }
-        if obj.SI_notation is not None:
-            data_spec['siNotation'] = obj.SI_notation
-        if obj.SI_name is not None:
-            data_spec['siName'] = obj.SI_name
-        if obj.DIN_notation is not None:
-            data_spec['dinNotation'] = obj.DIN_notation
-        if obj.ECE_name is not None:
-            data_spec['eceName'] = obj.ECE_name
-        if obj.ECE_code is not None:
-            data_spec['eceCode'] = obj.ECE_code
-        if obj.NIST_name is not None:
-            data_spec['nistName'] = obj.NIST_name
+        if obj.si_notation is not None:
+            data_spec['siNotation'] = obj.si_notation
+        if obj.si_name is not None:
+            data_spec['siName'] = obj.si_name
+        if obj.din_notation is not None:
+            data_spec['dinNotation'] = obj.din_notation
+        if obj.ece_name is not None:
+            data_spec['eceName'] = obj.ece_name
+        if obj.ece_code is not None:
+            data_spec['eceCode'] = obj.ece_code
+        if obj.nist_name is not None:
+            data_spec['nistName'] = obj.nist_name
         if obj.source_of_definition is not None:
             data_spec['sourceOfDefinition'] = obj.source_of_definition
         if obj.conversion_factor is not None:
@@ -435,21 +413,6 @@ class AASToJsonEncoder(json.JSONEncoder):
             data["assetInformation"] = obj.asset_information
         if not cls.stripped and obj.submodel:
             data["submodels"] = list(obj.submodel)
-        return data
-
-    # #################################################################
-    # transformation functions to serialize classes from model.security
-    # #################################################################
-
-    @classmethod
-    def _security_to_json(cls, obj: model.Security) -> Dict[str, object]:  # has no attributes in our implementation
-        """
-        serialization of an object from class Security to json
-
-        :param obj: object of class Security
-        :return: dict with the serialized attributes of this object
-        """
-        data = cls._abstract_classes_to_json(obj)
         return data
 
     # #################################################################
@@ -759,9 +722,9 @@ def _select_encoder(stripped: bool, encoder: Optional[Type[AASToJsonEncoder]] = 
 
 def _create_dict(data: model.AbstractObjectStore) -> dict:
     # separate different kind of objects
-    asset_administration_shells = []
-    submodels = []
-    concept_descriptions = []
+    asset_administration_shells: List[model.AssetAdministrationShell] = []
+    submodels: List[model.Submodel] = []
+    concept_descriptions: List[model.ConceptDescription] = []
     for obj in data:
         if isinstance(obj, model.AssetAdministrationShell):
             asset_administration_shells.append(obj)
@@ -769,7 +732,7 @@ def _create_dict(data: model.AbstractObjectStore) -> dict:
             submodels.append(obj)
         elif isinstance(obj, model.ConceptDescription):
             concept_descriptions.append(obj)
-    dict_ = {}
+    dict_: Dict[str, List] = {}
     if asset_administration_shells:
         dict_['assetAdministrationShells'] = asset_administration_shells
     if submodels:

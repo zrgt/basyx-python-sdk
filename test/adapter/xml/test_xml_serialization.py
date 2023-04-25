@@ -12,7 +12,7 @@ from lxml import etree  # type: ignore
 from basyx.aas import model
 from basyx.aas.adapter.xml import write_aas_xml_file, xml_serialization, XML_SCHEMA_FILE
 
-from basyx.aas.examples.data import example_concept_description, example_aas_missing_attributes, example_aas, \
+from basyx.aas.examples.data import example_aas_missing_attributes, example_aas, \
     example_submodel_template, example_aas_mandatory_attributes
 
 
@@ -79,7 +79,6 @@ class XMLSerializationSchemaTest(unittest.TestCase):
         data = example_aas.create_full_example()
         file = io.BytesIO()
         write_aas_xml_file(file=file, data=data)
-        write_aas_xml_file(file="/home/jkhsjdhjs/Desktop/aas.xml", data=data, pretty_print=True)
 
         # load schema
         aas_schema = etree.XMLSchema(file=XML_SCHEMA_FILE)
@@ -119,7 +118,7 @@ class XMLSerializationSchemaTest(unittest.TestCase):
     def test_missing_serialization(self) -> None:
         data = example_aas_missing_attributes.create_full_example()
         file = io.BytesIO()
-        write_aas_xml_file(file=file, data=data)
+        write_aas_xml_file(file=file, data=data, pretty_print=True)
 
         # load schema
         aas_schema = etree.XMLSchema(file=XML_SCHEMA_FILE)
@@ -131,7 +130,7 @@ class XMLSerializationSchemaTest(unittest.TestCase):
 
     def test_concept_description(self) -> None:
         data: model.DictObjectStore[model.Identifiable] = model.DictObjectStore()
-        data.add(example_concept_description.create_iec61360_concept_description())
+        data.add(example_aas.create_example_concept_description())
         file = io.BytesIO()
         write_aas_xml_file(file=file, data=data)
 
