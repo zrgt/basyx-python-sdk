@@ -41,6 +41,7 @@ setuptools.setup(
     },
     python_requires='>=3.7',
     install_requires=[
+        'jsonschema>=4.7,<5',
         'python-dateutil>=2.8,<3',
         'lxml>=4.2,<5',
         'urllib3>=1.26,<2.0',
