@@ -448,17 +448,10 @@ class AASFromXmlDecoder:
                 if len(constraint) == 0:
                     continue
                 if len(constraint) > 1:
-                    logger.warning(
-                        f"{_element_pretty_identifier(constraint)} has more than one constraint. "
-                        f"It is not compliant to the XML Schema!")
-                    for c in constraint:
-                        constructed = _failsafe_construct(c, cls.construct_constraint, cls.failsafe)
-                        if constructed is not None:
-                            obj.qualifier.add(constructed)
-                else:
-                    constructed = _failsafe_construct(constraint[0], cls.construct_constraint, cls.failsafe)
-                    if constructed is not None:
-                        obj.qualifier.add(constructed)
+                    logger.warning(f"{_element_pretty_identifier(constraint)} has more than one constraint, "
+                                   "which is invalid! Deserializing all constraints anyways...")
+                for constructed in _failsafe_construct_multiple(constraint, cls.construct_constraint, cls.failsafe):
+                    obj.qualifier.add(constructed)
 
     @classmethod
     def _construct_relationship_element_internal(cls, element: etree.Element, object_class: Type[RE], **_kwargs: Any) \
@@ -735,9 +728,8 @@ class AASFromXmlDecoder:
                     raise KeyError(f"{_element_pretty_identifier(data_element)} has no data element!")
                 if len(data_element) > 1:
                     logger.warning(f"{_element_pretty_identifier(data_element)} has more than one data element, "
-                                   "using the first one...")
-                constructed = _failsafe_construct(data_element[0], cls.construct_data_element, cls.failsafe)
-                if constructed is not None:
+                                   "which is invalid! Deserializing all data elements anyways...")
+                for constructed in _failsafe_construct_multiple(data_element, cls.construct_data_element, cls.failsafe):
                     annotated_relationship_element.annotation.add(constructed)
         return annotated_relationship_element
 
@@ -793,9 +785,9 @@ class AASFromXmlDecoder:
                     raise KeyError(f"{_element_pretty_identifier(submodel_element)} has no submodel element!")
                 if len(submodel_element) > 1:
                     logger.warning(f"{_element_pretty_identifier(submodel_element)} has more than one submodel element,"
-                                   " using the first one...")
-                constructed = _failsafe_construct(submodel_element[0], cls.construct_submodel_element, cls.failsafe)
-                if constructed is not None:
+                                   " which is invalid! Deserializing all submodel elements anyways...")
+                for constructed in _failsafe_construct_multiple(submodel_element, cls.construct_submodel_element,
+                                                                cls.failsafe):
                     entity.statement.add(constructed)
         cls._amend_abstract_attributes(entity, element)
         return entity
@@ -918,9 +910,9 @@ class AASFromXmlDecoder:
                     raise KeyError(f"{_element_pretty_identifier(submodel_element)} has no submodel element!")
                 if len(submodel_element) > 1:
                     logger.warning(f"{_element_pretty_identifier(submodel_element)} has more than one submodel element,"
-                                   " using the first one...")
-                constructed = _failsafe_construct(submodel_element[0], cls.construct_submodel_element, cls.failsafe)
-                if constructed is not None:
+                                   " which is invalid! Deserializing all submodel elements anyways...")
+                for constructed in _failsafe_construct_multiple(submodel_element, cls.construct_submodel_element,
+                                                                cls.failsafe):
                     collection.value.add(constructed)
         cls._amend_abstract_attributes(collection, element)
         return collection
@@ -991,9 +983,9 @@ class AASFromXmlDecoder:
                     raise KeyError(f"{_element_pretty_identifier(submodel_element)} has no submodel element!")
                 if len(submodel_element) > 1:
                     logger.warning(f"{_element_pretty_identifier(submodel_element)} has more than one submodel element,"
-                                   " using the first one...")
-                constructed = _failsafe_construct(submodel_element[0], cls.construct_submodel_element, cls.failsafe)
-                if constructed is not None:
+                                   " which is invalid! Deserializing all submodel elements anyways...")
+                for constructed in _failsafe_construct_multiple(submodel_element, cls.construct_submodel_element,
+                                                                cls.failsafe):
                     submodel.submodel_element.add(constructed)
         cls._amend_abstract_attributes(submodel, element)
         return submodel
