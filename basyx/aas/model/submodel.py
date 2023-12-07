@@ -931,30 +931,24 @@ class AnnotatedRelationshipElement(RelationshipElement, base.UniqueIdShortNamesp
         self.annotation = base.NamespaceSet(self, [("id_short", True)], annotation)
 
 
-class OperationVariable:
-    """
-    An operation variable is part of an operation that is used to define an input or output variable of that operation.
-
-    :ivar value: Describes the needed argument for an operation via a :class:`~.SubmodelElement` of `kind=TYPE`.
-    """
-
-    def __init__(self,
-                 value: SubmodelElement):
-        """
-        TODO: Add instruction what to do after construction
-        """
-        self.value: SubmodelElement = value
-
-
-class Operation(SubmodelElement):
+class Operation(SubmodelElement, base.UniqueIdShortNamespace):
     """
     An operation is a :class:`~.SubmodelElement` with input and output variables.
 
+    In- and output variables are implemented as :class:`SubmodelElements <.SubmodelElement>` directly without the
+    wrapping `OperationVariable`. This makes implementing *Constraint AASd-134* much easier since we can just use normal
+    :class:`NamespaceSets <~aas.model.base.NamespaceSet>`. Furthermore, an `OperationVariable` contains nothing besides
+    a single :class:`~.SubmodelElement` anyway, so implementing it would just make using `Operations` more tedious
+    for no reason.
+
+    *Constraint AASd-134:* For an Operation, the idShort of all inputVariable/value, outputVariable/value,
+                           and inoutputVariable/value shall be unique.
+
     :ivar id_short: Identifying string of the element within its name space. (inherited from
                     :class:`~aas.model.base.Referable`)
-    :ivar input_variable: List of input parameters (:class:`OperationVariables <.OperationVariable>`) of the operation
-    :ivar output_variable: List of output parameters (:class:`OperationVariables <.OperationVariable>`) of the operation
-    :ivar in_output_variable: List of parameters (:class:`OperationVariables <.OperationVariable>`) that are input and
+    :ivar input_variable: List of input parameters (:class:`SubmodelElements <.SubmodelElement>`) of the operation
+    :ivar output_variable: List of output parameters (:class:`SubmodelElements <.SubmodelElement>`) of the operation
+    :ivar in_output_variable: List of parameters (:class:`SubmodelElements <.SubmodelElement>`) that are input and
                               output of the operation
     :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
@@ -978,9 +972,9 @@ class Operation(SubmodelElement):
     """
     def __init__(self,
                  id_short: Optional[base.NameType],
-                 input_variable: Optional[List[OperationVariable]] = None,
-                 output_variable:  Optional[List[OperationVariable]] = None,
-                 in_output_variable:  Optional[List[OperationVariable]] = None,
+                 input_variable: Iterable[SubmodelElement] = (),
+                 output_variable: Iterable[SubmodelElement] = (),
+                 in_output_variable: Iterable[SubmodelElement] = (),
                  display_name: Optional[base.MultiLanguageNameType] = None,
                  category: Optional[base.NameType] = None,
                  description: Optional[base.MultiLanguageTextType] = None,
@@ -996,9 +990,9 @@ class Operation(SubmodelElement):
 
         super().__init__(id_short, display_name, category, description, parent, semantic_id, qualifier, extension,
                          supplemental_semantic_id, embedded_data_specifications)
-        self.input_variable = input_variable if input_variable is not None else []
-        self.output_variable = output_variable if output_variable is not None else []
-        self.in_output_variable = in_output_variable if in_output_variable is not None else []
+        self.input_variable = base.NamespaceSet(self, [("id_short", True)], input_variable)
+        self.output_variable = base.NamespaceSet(self, [("id_short", True)], output_variable)
+        self.in_output_variable = base.NamespaceSet(self, [("id_short", True)], in_output_variable)
 
 
 class Capability(SubmodelElement):
@@ -1048,7 +1042,6 @@ class Capability(SubmodelElement):
                          supplemental_semantic_id, embedded_data_specifications)
 
 
-@_string_constraints.constrain_identifier("global_asset_id")
 class Entity(SubmodelElement, base.UniqueIdShortNamespace):
     """
     An entity is a :class:`~.SubmodelElement` that is used to model entities
@@ -1091,7 +1084,7 @@ class Entity(SubmodelElement, base.UniqueIdShortNamespace):
                  entity_type: base.EntityType,
                  statement: Iterable[SubmodelElement] = (),
                  global_asset_id: Optional[base.Identifier] = None,
-                 specific_asset_id: Optional[base.SpecificAssetId] = None,
+                 specific_asset_id: Iterable[base.SpecificAssetId] = (),
                  display_name: Optional[base.MultiLanguageNameType] = None,
                  category: Optional[base.NameType] = None,
                  description: Optional[base.MultiLanguageTextType] = None,
@@ -1107,28 +1100,77 @@ class Entity(SubmodelElement, base.UniqueIdShortNamespace):
         super().__init__(id_short, display_name, category, description, parent, semantic_id, qualifier, extension,
                          supplemental_semantic_id, embedded_data_specifications)
         self.statement = base.NamespaceSet(self, [("id_short", True)], statement)
-        self.specific_asset_id: Optional[base.SpecificAssetId] = specific_asset_id
-        self.global_asset_id: Optional[base.Identifier] = global_asset_id
-        self._entity_type: base.EntityType
-        self.entity_type = entity_type
+        # assign private attributes, bypassing setters, as constraints will be checked below
+        self._entity_type: base.EntityType = entity_type
+        self._global_asset_id: Optional[base.Identifier] = global_asset_id
+        self._specific_asset_id: base.ConstrainedList[base.SpecificAssetId] = base.ConstrainedList(
+            specific_asset_id,
+            item_add_hook=self._check_constraint_add_spec_asset_id,
+            item_set_hook=self._check_constraint_set_spec_asset_id,
+            item_del_hook=self._check_constraint_del_spec_asset_id
+        )
+        self._validate_global_asset_id(global_asset_id)
+        self._validate_aasd_014(entity_type, global_asset_id, bool(specific_asset_id))
 
-    def _get_entity_type(self) -> base.EntityType:
+    @property
+    def entity_type(self) -> base.EntityType:
         return self._entity_type
 
-    def _set_entity_type(self, entity_type: base.EntityType) -> None:
-        if self.global_asset_id is None and self.specific_asset_id is None \
-                and entity_type == base.EntityType.SELF_MANAGED_ENTITY:
-            raise base.AASConstraintViolation(
-                14,
-                "A self-managed entity has to have a globalAssetId or a specificAssetId"
-            )
-        if (self.global_asset_id or self.specific_asset_id) and entity_type == base.EntityType.CO_MANAGED_ENTITY:
-            raise base.AASConstraintViolation(
-                14,
-                "A co-managed entity has to have neither a globalAssetId nor a specificAssetId")
+    @entity_type.setter
+    def entity_type(self, entity_type: base.EntityType) -> None:
+        self._validate_aasd_014(entity_type, self.global_asset_id, bool(self.specific_asset_id))
         self._entity_type = entity_type
 
-    entity_type = property(_get_entity_type, _set_entity_type)
+    @property
+    def global_asset_id(self) -> Optional[base.Identifier]:
+        return self._global_asset_id
+
+    @global_asset_id.setter
+    def global_asset_id(self, global_asset_id: Optional[base.Identifier]) -> None:
+        self._validate_global_asset_id(global_asset_id)
+        self._validate_aasd_014(self.entity_type, global_asset_id, bool(self.specific_asset_id))
+        self._global_asset_id = global_asset_id
+
+    @property
+    def specific_asset_id(self) -> base.ConstrainedList[base.SpecificAssetId]:
+        return self._specific_asset_id
+
+    @specific_asset_id.setter
+    def specific_asset_id(self, specific_asset_id: Iterable[base.SpecificAssetId]) -> None:
+        # constraints are checked via _check_constraint_set_spec_asset_id() in this case
+        self._specific_asset_id[:] = specific_asset_id
+
+    def _check_constraint_add_spec_asset_id(self, _new_item: base.SpecificAssetId,
+                                            _old_list: List[base.SpecificAssetId]) -> None:
+        self._validate_aasd_014(self.entity_type, self.global_asset_id, True)
+
+    def _check_constraint_set_spec_asset_id(self, items_to_replace: List[base.SpecificAssetId],
+                                            new_items: List[base.SpecificAssetId],
+                                            old_list: List[base.SpecificAssetId]) -> None:
+        self._validate_aasd_014(self.entity_type, self.global_asset_id,
+                                len(old_list) - len(items_to_replace) + len(new_items) > 0)
+
+    def _check_constraint_del_spec_asset_id(self, _item_to_del: base.SpecificAssetId,
+                                            old_list: List[base.SpecificAssetId]) -> None:
+        self._validate_aasd_014(self.entity_type, self.global_asset_id, len(old_list) > 1)
+
+    @staticmethod
+    def _validate_global_asset_id(global_asset_id: Optional[base.Identifier]) -> None:
+        if global_asset_id is not None:
+            _string_constraints.check_identifier(global_asset_id)
+
+    @staticmethod
+    def _validate_aasd_014(entity_type: base.EntityType,
+                           global_asset_id: Optional[base.Identifier],
+                           specific_asset_id_nonempty: bool) -> None:
+        if entity_type == base.EntityType.SELF_MANAGED_ENTITY and global_asset_id is None \
+                and not specific_asset_id_nonempty:
+            raise base.AASConstraintViolation(
+                14, "A self-managed entity has to have a globalAssetId or a specificAssetId")
+        elif entity_type == base.EntityType.CO_MANAGED_ENTITY and (global_asset_id is not None
+                                                                   or specific_asset_id_nonempty):
+            raise base.AASConstraintViolation(
+                14, "A co-managed entity has to have neither a globalAssetId nor a specificAssetId")
 
 
 class EventElement(SubmodelElement, metaclass=abc.ABCMeta):

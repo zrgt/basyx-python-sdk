@@ -277,9 +277,11 @@ def extension_to_xml(obj: model.Extension, tag: str = NS_AAS+"extension") -> etr
                                               text=model.datatypes.XSD_TYPE_NAMES[obj.value_type]))
     if obj.value:
         et_extension.append(_value_to_xml(obj.value, obj.value_type))  # type: ignore # (value_type could be None)
-    for refers_to in obj.refers_to:
-        et_extension.append(reference_to_xml(refers_to, NS_AAS+"refersTo"))
-
+    if len(obj.refers_to) > 0:
+        refers_to = _generate_element(NS_AAS+"refersTo")
+        for reference in obj.refers_to:
+            refers_to.append(reference_to_xml(reference, NS_AAS+"reference"))
+        et_extension.append(refers_to)
     return et_extension
 
 
@@ -677,11 +679,6 @@ def submodel_element_list_to_xml(obj: model.SubmodelElementList,
                                  tag: str = NS_AAS+"submodelElementList") -> etree.Element:
     et_submodel_element_list = abstract_classes_to_xml(tag, obj)
     et_submodel_element_list.append(_generate_element(NS_AAS + "orderRelevant", boolean_to_xml(obj.order_relevant)))
-    if len(obj.value) > 0:
-        et_value = _generate_element(NS_AAS + "value")
-        for se in obj.value:
-            et_value.append(submodel_element_to_xml(se))
-        et_submodel_element_list.append(et_value)
     if obj.semantic_id_list_element is not None:
         et_submodel_element_list.append(reference_to_xml(obj.semantic_id_list_element,
                                                          NS_AAS + "semanticIdListElement"))
@@ -690,6 +687,11 @@ def submodel_element_list_to_xml(obj: model.SubmodelElementList,
     if obj.value_type_list_element is not None:
         et_submodel_element_list.append(_generate_element(NS_AAS + "valueTypeListElement",
                                                           model.datatypes.XSD_TYPE_NAMES[obj.value_type_list_element]))
+    if len(obj.value) > 0:
+        et_value = _generate_element(NS_AAS + "value")
+        for se in obj.value:
+            et_value.append(submodel_element_to_xml(se))
+        et_submodel_element_list.append(et_value)
     return et_submodel_element_list
 
 
@@ -726,18 +728,20 @@ def annotated_relationship_element_to_xml(obj: model.AnnotatedRelationshipElemen
     return et_annotated_relationship_element
 
 
-def operation_variable_to_xml(obj: model.OperationVariable,
-                              tag: str = NS_AAS+"operationVariable") -> etree.Element:
+def operation_variable_to_xml(obj: model.SubmodelElement, tag: str = NS_AAS+"operationVariable") -> etree.Element:
     """
-    Serialization of objects of class :class:`~aas.model.submodel.OperationVariable` to XML
+    Serialization of :class:`~aas.model.submodel.SubmodelElement` to the XML OperationVariable representation
+    Since we don't implement the `OperationVariable` class, which is just a wrapper for a single
+    :class:`~aas.model.submodel.SubmodelElement`, elements are serialized as the `aas:value` child of an
+    `aas:operationVariable` element.
 
-    :param obj: Object of class :class:`~aas.model.submodel.OperationVariable`
+    :param obj: Object of class :class:`~aas.model.submodel.SubmodelElement`
     :param tag: Namespace+Tag of the serialized element (optional). Default is "aas:operationVariable"
     :return: Serialized ElementTree object
     """
     et_operation_variable = _generate_element(tag)
     et_value = _generate_element(NS_AAS+"value")
-    et_value.append(submodel_element_to_xml(obj.value))
+    et_value.append(submodel_element_to_xml(obj))
     et_operation_variable.append(et_value)
     return et_operation_variable
 
@@ -752,21 +756,14 @@ def operation_to_xml(obj: model.Operation,
     :return: Serialized ElementTree object
     """
     et_operation = abstract_classes_to_xml(tag, obj)
-    if obj.input_variable:
-        et_input_variables = _generate_element(NS_AAS+"inputVariables")
-        for input_ov in obj.input_variable:
-            et_input_variables.append(operation_variable_to_xml(input_ov, NS_AAS+"operationVariable"))
-        et_operation.append(et_input_variables)
-    if obj.output_variable:
-        et_output_variables = _generate_element(NS_AAS+"outputVariables")
-        for output_ov in obj.output_variable:
-            et_output_variables.append(operation_variable_to_xml(output_ov, NS_AAS+"operationVariable"))
-        et_operation.append(et_output_variables)
-    if obj.in_output_variable:
-        et_inoutput_variables = _generate_element(NS_AAS+"inoutputVariables")
-        for in_out_ov in obj.in_output_variable:
-            et_inoutput_variables.append(operation_variable_to_xml(in_out_ov, NS_AAS+"operationVariable"))
-        et_operation.append(et_inoutput_variables)
+    for tag, nss in ((NS_AAS+"inputVariables", obj.input_variable),
+                     (NS_AAS+"outputVariables", obj.output_variable),
+                     (NS_AAS+"inoutputVariables", obj.in_output_variable)):
+        if nss:
+            et_variables = _generate_element(tag)
+            for submodel_element in nss:
+                et_variables.append(operation_variable_to_xml(submodel_element))
+            et_operation.append(et_variables)
     return et_operation
 
 
@@ -801,7 +798,10 @@ def entity_to_xml(obj: model.Entity,
     if obj.global_asset_id:
         et_entity.append(_generate_element(NS_AAS + "globalAssetId", text=obj.global_asset_id))
     if obj.specific_asset_id:
-        et_entity.append(specific_asset_id_to_xml(obj.specific_asset_id, NS_AAS + "specificAssetId"))
+        et_specific_asset_id = _generate_element(name=NS_AAS + "specificAssetIds")
+        for specific_asset_id in obj.specific_asset_id:
+            et_specific_asset_id.append(specific_asset_id_to_xml(specific_asset_id, NS_AAS + "specificAssetId"))
+        et_entity.append(et_specific_asset_id)
     return et_entity
 
 

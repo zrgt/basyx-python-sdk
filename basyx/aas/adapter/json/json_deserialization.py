@@ -364,12 +364,14 @@ class AASFromJsonDecoder(json.JSONDecoder):
         return ret
 
     @classmethod
-    def _construct_operation_variable(
-            cls, dct: Dict[str, object], object_class=model.OperationVariable) -> model.OperationVariable:
+    def _construct_operation_variable(cls, dct: Dict[str, object]) -> model.SubmodelElement:
+        """
+        Since we don't implement `OperationVariable`, this constructor discards the wrapping `OperationVariable` object
+        and just returns the contained :class:`~aas.model.submodel.SubmodelElement`.
+        """
         # TODO: remove the following type: ignore comments when mypy supports abstract types for Type[T]
         # see https://github.com/python/mypy/issues/5374
-        ret = object_class(value=_get_ts(dct, 'value', model.SubmodelElement))  # type: ignore
-        return ret
+        return _get_ts(dct, 'value', model.SubmodelElement)  # type: ignore
 
     @classmethod
     def _construct_lang_string_set(cls, lst: List[Dict[str, object]], object_class: Type[LSS]) -> LSS:
@@ -417,13 +419,19 @@ class AASFromJsonDecoder(json.JSONDecoder):
     @classmethod
     def _construct_asset_information(cls, dct: Dict[str, object], object_class=model.AssetInformation)\
             -> model.AssetInformation:
-        ret = object_class(asset_kind=ASSET_KIND_INVERSE[_get_ts(dct, 'assetKind', str)])
-        cls._amend_abstract_attributes(ret, dct)
+        global_asset_id = None
         if 'globalAssetId' in dct:
-            ret.global_asset_id = _get_ts(dct, 'globalAssetId', str)
+            global_asset_id = _get_ts(dct, 'globalAssetId', str)
+        specific_asset_id = set()
         if 'specificAssetIds' in dct:
             for desc_data in _get_ts(dct, "specificAssetIds", list):
-                ret.specific_asset_id.add(cls._construct_specific_asset_id(desc_data, model.SpecificAssetId))
+                specific_asset_id.add(cls._construct_specific_asset_id(desc_data, model.SpecificAssetId))
+
+        ret = object_class(asset_kind=ASSET_KIND_INVERSE[_get_ts(dct, 'assetKind', str)],
+                           global_asset_id=global_asset_id,
+                           specific_asset_id=specific_asset_id)
+        cls._amend_abstract_attributes(ret, dct)
+
         if 'assetType' in dct:
             ret.asset_type = _get_ts(dct, 'assetType', str)
         if 'defaultThumbnail' in dct:
@@ -497,9 +505,10 @@ class AASFromJsonDecoder(json.JSONDecoder):
         global_asset_id = None
         if 'globalAssetId' in dct:
             global_asset_id = _get_ts(dct, 'globalAssetId', str)
-        specific_asset_id = None
+        specific_asset_id = set()
         if 'specificAssetIds' in dct:
-            specific_asset_id = cls._construct_specific_asset_id(_get_ts(dct, 'specificAssetIds', dict))
+            for desc_data in _get_ts(dct, "specificAssetIds", list):
+                specific_asset_id.add(cls._construct_specific_asset_id(desc_data, model.SpecificAssetId))
 
         ret = object_class(id_short=None,
                            entity_type=ENTITY_TYPES_INVERSE[_get_ts(dct, "entityType", str)],
@@ -534,8 +543,8 @@ class AASFromJsonDecoder(json.JSONDecoder):
         if 'value' in dct:
             ret.value = model.datatypes.from_xsd(_get_ts(dct, 'value', str), ret.value_type)
         if 'refersTo' in dct:
-            ret.refers_to = [cls._construct_model_reference(refers_to, model.Referable)  # type: ignore
-                             for refers_to in _get_ts(dct, 'refersTo', list)]
+            ret.refers_to = {cls._construct_model_reference(refers_to, model.Referable)  # type: ignore
+                             for refers_to in _get_ts(dct, 'refersTo', list)}
         return ret
 
     @classmethod
@@ -590,7 +599,7 @@ class AASFromJsonDecoder(json.JSONDecoder):
             if json_name in dct:
                 for variable_data in _get_ts(dct, json_name, list):
                     try:
-                        target.append(cls._construct_operation_variable(variable_data))
+                        target.add(cls._construct_operation_variable(variable_data))
                     except (KeyError, TypeError) as e:
                         error_message = "Error while trying to convert JSON object into {} of {}: {}".format(
                             json_name, ret, pprint.pformat(variable_data, depth=2, width=2 ** 14, compact=True))

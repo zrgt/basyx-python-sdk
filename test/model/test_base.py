@@ -374,7 +374,7 @@ class ModelNamespaceTest(unittest.TestCase):
         self.assertEqual(
             "Object with attribute (name='semantic_id', value='ExternalReference(key=(Key("
             "type=GLOBAL_REFERENCE, value=http://acplt.org/Test1),))') is already present in this set of objects "
-            "(Constraint AASd-022)",
+            "(Constraint AASd-000)",
             str(cm.exception))
         self.namespace.set2.add(self.prop5)
         self.namespace.set2.add(self.prop6)
@@ -389,7 +389,7 @@ class ModelNamespaceTest(unittest.TestCase):
         self.assertEqual(
             "Object with attribute (name='semantic_id', value='"
             "ExternalReference(key=(Key(type=GLOBAL_REFERENCE, value=http://acplt.org/Test1),))')"
-            " is already present in another set in the same namespace (Constraint AASd-022)",
+            " is already present in another set in the same namespace (Constraint AASd-000)",
             str(cm.exception))
 
         self.assertIs(self.prop1, self.namespace.set1.get("id_short", "Prop1"))
@@ -456,7 +456,7 @@ class ModelNamespaceTest(unittest.TestCase):
         with self.assertRaises(model.AASConstraintViolation) as cm:
             self.namespace3.set1.add(self.qualifier1alt)
         self.assertEqual("Object with attribute (name='type', value='type1') is already present in this set "
-                         "of objects (Constraint AASd-022)",
+                         "of objects (Constraint AASd-021)",
                          str(cm.exception))
 
     def test_namespaceset_hooks(self) -> None:
@@ -1213,7 +1213,15 @@ class ConstrainedListTest(unittest.TestCase):
         self.assertEqual(c_list, [1, 2, 3])
         with self.assertRaises(ValueError):
             c_list.clear()
-        self.assertEqual(c_list, [1, 2, 3])
+        # the default clear() implementation seems to repeatedly delete the last item until the list is empty
+        # in this case, the last item is 3, which cannot be deleted because it is > 2, thus leaving it unclear whether
+        # clear() really is atomic. to work around this, the list is reversed, making 1 the last item, and attempting
+        # to clear again.
+        c_list.reverse()
+        with self.assertRaises(ValueError):
+            c_list.clear()
+        self.assertEqual(c_list, [3, 2, 1])
+        c_list.reverse()
         del c_list[0:2]
         self.assertEqual(c_list, [3])
 
@@ -1222,19 +1230,14 @@ class LangStringSetTest(unittest.TestCase):
     def test_language_tag_constraints(self) -> None:
         with self.assertRaises(ValueError) as cm:
             model.LangStringSet({"foo": "bar"})
-        self.assertEqual("The language code 'foo' of the language tag 'foo' doesn't consist of exactly "
-                         "two lower-case letters!", str(cm.exception))
-        with self.assertRaises(ValueError) as cm:
-            model.LangStringSet({"fo-OO-bar": "bar"})
-        self.assertEqual("The extension 'OO-bar' of the language tag 'fo-OO-bar' doesn't consist of exactly "
-                         "two upper-case letters!", str(cm.exception))
-        model.LangStringSet({"fo": "bar"})
+        self.assertEqual("The language code of the language tag must consist of exactly two lower-case letters! "
+                         "Given language tag and language code: 'foo', 'foo'", str(cm.exception))
 
         lss = model.LangStringSet({"fo-OO": "bar"})
         with self.assertRaises(ValueError) as cm:
             lss["foo"] = "bar"
-        self.assertEqual("The language code 'foo' of the language tag 'foo' doesn't consist of exactly "
-                         "two lower-case letters!", str(cm.exception))
+        self.assertEqual("The language code of the language tag must consist of exactly two lower-case letters! "
+                         "Given language tag and language code: 'foo', 'foo'", str(cm.exception))
         self.assertNotIn("foo", lss)
         self.assertNotIn("fo", lss)
         lss["fo"] = "bar"

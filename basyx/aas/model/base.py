@@ -288,12 +288,10 @@ class LangStringSet(MutableMapping[str, str]):
     @classmethod
     def _check_language_tag_constraints(cls, ltag: str):
         split = ltag.split("-", 1)
-        if len(split[0]) != 2 or not split[0].isalpha() or not split[0].islower():
-            raise ValueError(f"The language code '{split[0]}' of the language tag '{ltag}' doesn't consist of exactly "
-                             "two lower-case letters!")
-        if len(split) > 1 and (len(split[1]) != 2 or not split[1].isalpha() or not split[1].isupper()):
-            raise ValueError(f"The extension '{split[1]}' of the language tag '{ltag}' doesn't consist of exactly "
-                             "two upper-case letters!")
+        lang_code = split[0]
+        if len(lang_code) != 2 or not lang_code.isalpha() or not lang_code.islower():
+            raise ValueError(f"The language code of the language tag must consist of exactly two lower-case letters! "
+                             f"Given language tag and language code: '{ltag}', '{lang_code}'")
 
     def __getitem__(self, item: str) -> str:
         return self._dict[item]
@@ -1162,6 +1160,8 @@ class HasDataSpecification(metaclass=abc.ABCMeta):
     element may or shall have. The data specifications used are explicitly specified
     with their global ID.
 
+    *Note:* Please consider, that we have not implemented DataSpecification template class
+
     :ivar embedded_data_specifications: List of :class:`~.EmbeddedDataSpecification`.
     """
     @abc.abstractmethod
@@ -1258,7 +1258,7 @@ class Identifiable(Referable, metaclass=abc.ABCMeta):
     :ivar ~.id: The globally unique id of the element.
     """
     @abc.abstractmethod
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.administration: Optional[AdministrativeInformation] = None
         # The id attribute is set by all inheriting classes __init__ functions.
@@ -1310,6 +1310,10 @@ class ConstrainedList(MutableSequence[_T], Generic[_T]):
             for idx, v in enumerate(v_list):
                 self._item_add_hook(v, self._list + v_list[:idx])
         self._list = self._list + v_list
+
+    def clear(self) -> None:
+        # clear() repeatedly deletes the last item by default, making it not atomic
+        del self[:]
 
     @overload
     def __getitem__(self, index: int) -> _T: ...
@@ -1462,7 +1466,7 @@ class Extension(HasSemantics):
         self.value_type: Optional[DataTypeDefXsd] = value_type
         self._value: Optional[ValueDataType]
         self.value = value
-        self.refers_to: Iterable[ModelReference] = refers_to
+        self.refers_to: Set[ModelReference] = set(refers_to)
         self.semantic_id: Optional[Reference] = semantic_id
         self.supplemental_semantic_id: ConstrainedList[Reference] = ConstrainedList(supplemental_semantic_id)
 
@@ -1516,7 +1520,7 @@ class HasKind(metaclass=abc.ABCMeta):
     :ivar _kind: Kind of the element: either type or instance. Default = :attr:`~ModellingKind.INSTANCE`.
     """
     @abc.abstractmethod
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._kind: ModellingKind = ModellingKind.INSTANCE
 
@@ -1537,7 +1541,7 @@ class Qualifiable(Namespace, metaclass=abc.ABCMeta):
         qualifiable element.
     """
     @abc.abstractmethod
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.namespace_element_sets: List[NamespaceSet] = []
         self.qualifier: NamespaceSet[Qualifier]
@@ -1765,6 +1769,14 @@ class UniqueSemanticIdNamespace(Namespace, metaclass=abc.ABCMeta):
 
 ATTRIBUTE_TYPES = Union[NameType, Reference, QualifierType]
 
+# TODO: Find a better solution for providing constraint ids
+ATTRIBUTES_CONSTRAINT_IDS = {
+    "id_short": 22,  # Referable,
+    "type": 21,  # Qualifier,
+    "name": 77,  # Extension,
+    # "id_short": 134, # model.OperationVariable
+}
+
 
 class NamespaceSet(MutableSet[_NSO], Generic[_NSO]):
     """
@@ -1864,35 +1876,65 @@ class NamespaceSet(MutableSet[_NSO], Generic[_NSO]):
     def __iter__(self) -> Iterator[_NSO]:
         return iter(next(iter(self._backend.values()))[0].values())
 
-    def add(self, value: _NSO):
-        if value.parent is not None and value.parent is not self.parent:
-            raise ValueError("Object has already a parent, but it must not be part of two namespaces.")
+    def add(self, element: _NSO):
+        if element.parent is not None and element.parent is not self.parent:
+            raise ValueError("Object has already a parent; it cannot belong to two namespaces.")
             # TODO remove from current parent instead (allow moving)?
-        if self._item_id_set_hook is not None:
-            self._item_id_set_hook(value)
+
+        self._execute_item_id_set_hook(element)
+        self._validate_namespace_constraints(element)
+        self._execute_item_add_hook(element)
+
+        element.parent = self.parent
+        for key_attr_name, (backend, case_sensitive) in self._backend.items():
+            backend[self._get_attribute(element, key_attr_name, case_sensitive)] = element
+
+    def _validate_namespace_constraints(self, element: _NSO):
         for set_ in self.parent.namespace_element_sets:
-            for attr_name, (backend, case_sensitive) in set_._backend.items():
-                if hasattr(value, attr_name):
-                    attr_value = self._get_attribute(value, attr_name, case_sensitive)
-                    if attr_value is None:
-                        raise AASConstraintViolation(117, f"{value!r} has attribute {attr_name}=None, which is not "
-                                                          f"allowed within a {self.parent.__class__.__name__}!")
-                    if attr_value in backend:
-                        raise AASConstraintViolation(22, "Object with attribute (name='{}', value='{}') is already "
-                                                         "present in {}"
-                                                     .format(attr_name, str(getattr(value, attr_name)),
-                                                             "this set of objects"
-                                                             if set_ is self else "another set in the same namespace"))
+            for key_attr_name, (backend_dict, case_sensitive) in set_._backend.items():
+                if hasattr(element, key_attr_name):
+                    key_attr_value = self._get_attribute(element, key_attr_name, case_sensitive)
+                    self._check_attr_is_not_none(element, key_attr_name, key_attr_value)
+                    self._check_value_is_not_in_backend(element, key_attr_name, key_attr_value, backend_dict, set_)
+
+    def _check_attr_is_not_none(self, element: _NSO, attr_name: str, attr):
+        if attr is None:
+            if attr_name == "id_short":
+                raise AASConstraintViolation(117, f"{element!r} has attribute {attr_name}=None, "
+                                                  f"which is not allowed within a {self.parent.__class__.__name__}!")
+            else:
+                raise ValueError(f"{element!r} has attribute {attr_name}=None, which is not allowed!")
+
+    def _check_value_is_not_in_backend(self, element: _NSO, attr_name: str, attr,
+                                       backend_dict: Dict[ATTRIBUTE_TYPES, _NSO], set_: "NamespaceSet"):
+        if attr in backend_dict:
+            if set_ is self:
+                text = f"Object with attribute (name='{attr_name}', value='{getattr(element, attr_name)}') " \
+                       f"is already present in this set of objects"
+            else:
+                text = f"Object with attribute (name='{attr_name}', value='{getattr(element, attr_name)}') " \
+                       f"is already present in another set in the same namespace"
+            raise AASConstraintViolation(ATTRIBUTES_CONSTRAINT_IDS.get(attr_name, 0), text)
+
+    def _execute_item_id_set_hook(self, element: _NSO):
+        if self._item_id_set_hook is not None:
+            self._item_id_set_hook(element)
+
+    def _execute_item_add_hook(self, element: _NSO):
         if self._item_add_hook is not None:
             try:
-                self._item_add_hook(value, self.__iter__())
-            except Exception:
-                if self._item_id_del_hook is not None:
-                    self._item_id_del_hook(value)
+                self._item_add_hook(element, self.__iter__())
+            except Exception as e:
+                self._execute_item_del_hook(element)
                 raise
-        value.parent = self.parent
-        for attr_name, (backend, case_sensitive) in self._backend.items():
-            backend[self._get_attribute(value, attr_name, case_sensitive)] = value
+
+    def _execute_item_del_hook(self, element: _NSO):
+        # parent needs to be unset first, otherwise generated id_shorts cannot be unset
+        # see SubmodelElementList
+        if hasattr(element, "parent"):
+            element.parent = None
+        if self._item_id_del_hook is not None:
+            self._item_id_del_hook(element)
 
     def remove_by_id(self, attribute_name: str, identifier: ATTRIBUTE_TYPES) -> None:
         item = self.get_object_by_attribute(attribute_name, identifier)
@@ -1900,22 +1942,16 @@ class NamespaceSet(MutableSet[_NSO], Generic[_NSO]):
 
     def remove(self, item: _NSO) -> None:
         item_found = False
-        for attr_name, (backend, case_sensitive) in self._backend.items():
-            item_in_dict = backend[self._get_attribute(item, attr_name, case_sensitive)]
-            if item_in_dict is item:
+        for key_attr_name, (backend_dict, case_sensitive) in self._backend.items():
+            key_attr_value = self._get_attribute(item, key_attr_name, case_sensitive)
+            if backend_dict[key_attr_value] is item:
+                # item has to be removed from backend before _item_del_hook() is called,
+                # as the hook may unset the id_short, as in SubmodelElementLists
+                del backend_dict[key_attr_value]
                 item_found = True
-                break
         if not item_found:
             raise KeyError("Object not found in NamespaceDict")
-        # parent needs to be unset first, otherwise generated id_shorts cannot be unset
-        # see SubmodelElementList
-        item.parent = None
-        # item has to be removed from backend before _item_del_hook() is called, as the hook may unset the id_short,
-        # as in SubmodelElementLists
-        for attr_name, (backend, case_sensitive) in self._backend.items():
-            del backend[self._get_attribute(item, attr_name, case_sensitive)]
-        if self._item_id_del_hook is not None:
-            self._item_id_del_hook(item)
+        self._execute_item_del_hook(item)
 
     def discard(self, x: _NSO) -> None:
         if x not in self:
@@ -1924,19 +1960,14 @@ class NamespaceSet(MutableSet[_NSO], Generic[_NSO]):
 
     def pop(self) -> _NSO:
         _, value = next(iter(self._backend.values()))[0].popitem()
-        if self._item_id_del_hook is not None:
-            self._item_id_del_hook(value)
+        self._execute_item_del_hook(value)
         value.parent = None
         return value
 
     def clear(self) -> None:
         for attr_name, (backend, case_sensitive) in self._backend.items():
             for value in backend.values():
-                # parent needs to be unset first, otherwise generated id_shorts cannot be unset
-                # see SubmodelElementList
-                value.parent = None
-                if self._item_id_del_hook is not None:
-                    self._item_id_del_hook(value)
+                self._execute_item_del_hook(value)
         for attr_name, (backend, case_sensitive) in self._backend.items():
             backend.clear()
 
@@ -2047,9 +2078,9 @@ class OrderedNamespaceSet(NamespaceSet[_NSO], MutableSequence[_NSO], Generic[_NS
     def __iter__(self) -> Iterator[_NSO]:
         return iter(self._order)
 
-    def add(self, value: _NSO):
-        super().add(value)
-        self._order.append(value)
+    def add(self, element: _NSO):
+        super().add(element)
+        self._order.append(element)
 
     def remove(self, item: Union[Tuple[str, ATTRIBUTE_TYPES], _NSO]):
         if isinstance(item, tuple):
@@ -2129,6 +2160,9 @@ class SpecificAssetId(HasSemantics):
     """
     A specific asset ID describes a generic supplementary identifying attribute of the asset.
     The specific asset ID is not necessarily globally unique.
+
+    *Constraint AASd-133:* SpecificAssetId/externalSubjectId shall be a global reference,
+        i.e. Reference/type = ExternalReference
 
     :ivar name: Key of the identifier
     :ivar value: The value of the identifier with the corresponding key.

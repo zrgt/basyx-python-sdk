@@ -29,6 +29,8 @@ class AssetInformation:
     identifiers. However, to support the corner case of very first phase of lifecycle where a stabilised/constant
     global asset identifier does not already exist, the corresponding attribute “globalAssetId” is optional.
 
+    *Constraint AASd-131*:  The globalAssetId or at least one specificAssetId shall be defined for AssetInformation.
+
     :ivar asset_kind: Denotes whether the Asset is of :class:`~aas.model.base.AssetKind` "TYPE" or "INSTANCE".
                       Default is "INSTANCE".
     :ivar global_asset_id: :class:`~aas.model.base.Identifier` modelling the identifier of the asset the AAS is
@@ -52,30 +54,65 @@ class AssetInformation:
     def __init__(self,
                  asset_kind: base.AssetKind = base.AssetKind.INSTANCE,
                  global_asset_id: Optional[base.Identifier] = None,
-                 specific_asset_id: Optional[Set[base.SpecificAssetId]] = None,
+                 specific_asset_id: Iterable[base.SpecificAssetId] = (),
                  asset_type: Optional[base.Identifier] = None,
                  default_thumbnail: Optional[base.Resource] = None):
 
         super().__init__()
         self.asset_kind: base.AssetKind = asset_kind
-        self._global_asset_id: Optional[base.Identifier] = global_asset_id
-        self.specific_asset_id: Set[base.SpecificAssetId] = set() if specific_asset_id is None \
-            else specific_asset_id
         self.asset_type: Optional[base.Identifier] = asset_type
         self.default_thumbnail: Optional[base.Resource] = default_thumbnail
+        # assign private attributes, bypassing setters, as constraints will be checked below
+        self._specific_asset_id: base.ConstrainedList[base.SpecificAssetId] = base.ConstrainedList(
+            specific_asset_id,
+            item_set_hook=self._check_constraint_set_spec_asset_id,
+            item_del_hook=self._check_constraint_del_spec_asset_id
+        )
+        self._global_asset_id: Optional[base.Identifier] = global_asset_id
+        self._validate_global_asset_id(global_asset_id)
+        self._validate_aasd_131(global_asset_id, bool(specific_asset_id))
 
-    def _get_global_asset_id(self):
+    @property
+    def global_asset_id(self) -> Optional[base.Identifier]:
         return self._global_asset_id
 
-    def _set_global_asset_id(self, global_asset_id: Optional[base.Identifier]):
-        if global_asset_id is None:
-            if self.specific_asset_id is None or not self.specific_asset_id:
-                raise ValueError("either global or specific asset id must be set")
-        else:
-            _string_constraints.check_identifier(global_asset_id)
+    @global_asset_id.setter
+    def global_asset_id(self, global_asset_id: Optional[base.Identifier]) -> None:
+        self._validate_global_asset_id(global_asset_id)
+        self._validate_aasd_131(global_asset_id, bool(self.specific_asset_id))
         self._global_asset_id = global_asset_id
 
-    global_asset_id = property(_get_global_asset_id, _set_global_asset_id)
+    @property
+    def specific_asset_id(self) -> base.ConstrainedList[base.SpecificAssetId]:
+        return self._specific_asset_id
+
+    @specific_asset_id.setter
+    def specific_asset_id(self, specific_asset_id: Iterable[base.SpecificAssetId]) -> None:
+        # constraints are checked via _check_constraint_set_spec_asset_id() in this case
+        self._specific_asset_id[:] = specific_asset_id
+
+    def _check_constraint_set_spec_asset_id(self, items_to_replace: List[base.SpecificAssetId],
+                                            new_items: List[base.SpecificAssetId],
+                                            old_list: List[base.SpecificAssetId]) -> None:
+        self._validate_aasd_131(self.global_asset_id,
+                                len(old_list) - len(items_to_replace) + len(new_items) > 0)
+
+    def _check_constraint_del_spec_asset_id(self, _item_to_del: base.SpecificAssetId,
+                                            old_list: List[base.SpecificAssetId]) -> None:
+        self._validate_aasd_131(self.global_asset_id, len(old_list) > 1)
+
+    @staticmethod
+    def _validate_global_asset_id(global_asset_id: Optional[base.Identifier]) -> None:
+        if global_asset_id is not None:
+            _string_constraints.check_identifier(global_asset_id)
+
+    @staticmethod
+    def _validate_aasd_131(global_asset_id: Optional[base.Identifier], specific_asset_id_nonempty: bool) -> None:
+        if global_asset_id is None and not specific_asset_id_nonempty:
+            raise base.AASConstraintViolation(131,
+                                              "An AssetInformation has to have a globalAssetId or a specificAssetId")
+        if global_asset_id is not None:
+            _string_constraints.check_identifier(global_asset_id)
 
     def __repr__(self) -> str:
         return "AssetInformation(assetKind={}, globalAssetId={}, specificAssetId={}, assetType={}, " \

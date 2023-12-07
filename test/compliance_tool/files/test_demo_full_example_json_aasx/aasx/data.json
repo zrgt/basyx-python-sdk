@@ -262,7 +262,8 @@
             "modelType": "AssetAdministrationShell",
             "id": "https://acplt.org/Test_AssetAdministrationShell2_Mandatory",
             "assetInformation": {
-                "assetKind": "Instance"
+                "assetKind": "Instance",
+                "globalAssetId": "http://acplt.org/TestAsset2_Mandatory/"
             }
         },
         {
@@ -728,19 +729,21 @@
                     ],
                     "entityType": "SelfManagedEntity",
                     "globalAssetId": "http://acplt.org/TestAsset/",
-                    "specificAssetId": {
-                        "name": "TestKey",
-                        "value": "TestValue",
-                        "externalSubjectId": {
-                            "type": "ExternalReference",
-                            "keys": [
-                                {
-                                    "type": "GlobalReference",
-                                    "value": "http://acplt.org/SpecificAssetId/"
-                                }
-                            ]
+                    "specificAssetIds": [
+                        {
+                            "name": "TestKey",
+                            "value": "TestValue",
+                            "externalSubjectId": {
+                                "type": "ExternalReference",
+                                "keys": [
+                                    {
+                                        "type": "GlobalReference",
+                                        "value": "http://acplt.org/SpecificAssetId/"
+                                    }
+                                ]
+                            }
                         }
-                    }
+                    ]
                 },
                 {
                     "idShort": "ExampleEntity2",
@@ -949,7 +952,7 @@
                     "inputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -977,7 +980,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInput"
                                         }
                                     ]
                                 },
@@ -999,7 +1002,7 @@
                     "outputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyOutput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -1027,7 +1030,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyOutput"
                                         }
                                     ]
                                 },
@@ -1049,7 +1052,7 @@
                     "inoutputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInOutput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -1077,7 +1080,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInOutput"
                                         }
                                     ]
                                 },
@@ -1763,7 +1766,6 @@
                                 {
                                     "idShort": "ExampleFile",
                                     "modelType": "File",
-                                    "value": null,
                                     "contentType": "application/pdf"
                                 },
                                 {
@@ -1775,16 +1777,13 @@
                                     "idShort": "ExampleProperty",
                                     "category": "PARAMETER",
                                     "modelType": "Property",
-                                    "value": null,
                                     "valueType": "xs:string"
                                 },
                                 {
                                     "idShort": "ExampleRange",
                                     "category": "PARAMETER",
                                     "modelType": "Range",
-                                    "valueType": "xs:int",
-                                    "min": null,
-                                    "max": null
+                                    "valueType": "xs:int"
                                 },
                                 {
                                     "idShort": "ExampleReferenceElement",
@@ -1980,7 +1979,7 @@
                     "inputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -2008,7 +2007,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInput"
                                         }
                                     ]
                                 },
@@ -2030,7 +2029,7 @@
                     "outputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyOutput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -2058,7 +2057,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyOutput"
                                         }
                                     ]
                                 },
@@ -2080,7 +2079,7 @@
                     "inoutputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInOutput",
                                 "displayName": [
                                     {
                                         "language": "en-US",
@@ -2108,7 +2107,7 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInOutput"
                                         }
                                     ]
                                 },
@@ -2572,7 +2571,7 @@
                     "inputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInput",
                                 "category": "CONSTANT",
                                 "description": [
                                     {
@@ -2590,12 +2589,11 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInput"
                                         }
                                     ]
                                 },
                                 "kind": "Template",
-                                "value": null,
                                 "valueType": "xs:string"
                             }
                         }
@@ -2603,7 +2601,7 @@
                     "outputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyOutput",
                                 "category": "CONSTANT",
                                 "description": [
                                     {
@@ -2621,12 +2619,11 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyOutput"
                                         }
                                     ]
                                 },
                                 "kind": "Template",
-                                "value": null,
                                 "valueType": "xs:string"
                             }
                         }
@@ -2634,7 +2631,7 @@
                     "inoutputVariables": [
                         {
                             "value": {
-                                "idShort": "ExampleProperty",
+                                "idShort": "ExamplePropertyInOutput",
                                 "category": "CONSTANT",
                                 "description": [
                                     {
@@ -2652,12 +2649,11 @@
                                     "keys": [
                                         {
                                             "type": "GlobalReference",
-                                            "value": "http://acplt.org/Properties/ExampleProperty"
+                                            "value": "http://acplt.org/Properties/ExamplePropertyInOutput"
                                         }
                                     ]
                                 },
                                 "kind": "Template",
-                                "value": null,
                                 "valueType": "xs:string"
                             }
                         }
@@ -2825,7 +2821,6 @@
                                 ]
                             },
                             "kind": "Template",
-                            "value": null,
                             "valueType": "xs:string"
                         },
                         {
@@ -2878,7 +2873,6 @@
                             },
                             "kind": "Template",
                             "valueType": "xs:int",
-                            "min": null,
                             "max": "100"
                         },
                         {
@@ -2906,8 +2900,7 @@
                             },
                             "kind": "Template",
                             "valueType": "xs:int",
-                            "min": "0",
-                            "max": null
+                            "min": "0"
                         },
                         {
                             "idShort": "ExampleBlob",
@@ -2959,7 +2952,6 @@
                                 ]
                             },
                             "kind": "Template",
-                            "value": null,
                             "contentType": "application/pdf"
                         },
                         {

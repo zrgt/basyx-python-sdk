@@ -93,6 +93,10 @@ class DataChecker:
 
 
 class AASDataChecker(DataChecker):
+    def __init__(self, check_extensions: bool = True, **kwargs):
+        super().__init__(**kwargs)
+        self.check_extensions = check_extensions
+
     def _check_submodel_element(self, object_: model.SubmodelElement, expected_object: model.SubmodelElement):
         if self.check_is_instance(object_, expected_object.__class__):
             if isinstance(object_, model.Property):
@@ -126,6 +130,41 @@ class AASDataChecker(DataChecker):
             else:
                 raise AttributeError('Submodel Element class not implemented')
 
+    def _check_has_extension_equal(self, object_: model.HasExtension, expected_object: model.HasExtension):
+        """
+        Checks if the HasExtension object_ has the same HasExtension attributes as the expected_value object and
+        adds / stores the check result for later analysis.
+
+        :param object_: The HasExtension object which shall be checked
+        :param expected_object: The expected HasExtension object
+        :return: The value of expression to be used in control statements
+        """
+        if not self.check_extensions:
+            return
+        self.check_contained_element_length(object_, 'extension', model.Extension, len(expected_object.extension))
+        for expected_extension in expected_object.extension:
+            extension = object_.extension.get('name', expected_extension.name)
+            if self.check(extension is not None, f'{expected_extension!r} must exist'):
+                self._check_extension_equal(extension, expected_extension)  # type: ignore
+
+        found_extensions = self._find_extra_namespace_set_elements_by_name(object_.extension, expected_object.extension)
+        self.check(found_extensions == set(), f'{object_!r} must not have extra extensions', value=found_extensions)
+
+    def _check_extension_equal(self, object_: model.Extension, expected_object: model.Extension):
+        """
+        Checks if the Extension object_ has the same Extension attributes as the expected_value object and
+        adds / stores the check result for later analysis.
+
+        :param object_: The Extension object which shall be checked
+        :param expected_object: The expected Extension object
+        :return: The value of expression to be used in control statements
+        """
+        self._check_has_semantics_equal(object_, expected_object)
+        self.check_attribute_equal(object_, 'name', expected_object.name)
+        self.check_attribute_equal(object_, 'value_type', expected_object.value_type)
+        self.check_attribute_equal(object_, 'value', expected_object.value)
+        self.check_attribute_equal(object_, 'refers_to', expected_object.refers_to)
+
     def _check_referable_equal(self, object_: model.Referable, expected_object: model.Referable):
         """
         Checks if the referable object_ has the same referable attributes as the expected_value object and
@@ -142,6 +181,7 @@ class AASDataChecker(DataChecker):
         self.check_attribute_equal(object_, "category", expected_object.category)
         self.check_attribute_equal(object_, "description", expected_object.description)
         self.check_attribute_equal(object_, "display_name", expected_object.display_name)
+        self._check_has_extension_equal(object_, expected_object)
 
     def _check_identifiable_equal(self, object_: model.Identifiable, expected_object: model.Identifiable):
         """
@@ -267,7 +307,7 @@ class AASDataChecker(DataChecker):
             except KeyError:
                 self.check(False, 'Submodel Element {} must exist'.format(repr(expected_element)))
 
-        found_elements = self._find_extra_elements_by_id_short(object_.value, expected_value.value)
+        found_elements = self._find_extra_namespace_set_elements_by_id_short(object_.value, expected_value.value)
         self.check(found_elements == set(), '{} must not have extra elements'.format(repr(object_)),
                    value=found_elements)
 
@@ -426,7 +466,8 @@ class AASDataChecker(DataChecker):
             except KeyError:
                 self.check(False, 'Annotation {} must exist'.format(repr(expected_data_element)))
 
-        found_elements = self._find_extra_elements_by_id_short(object_.annotation, expected_value.annotation)
+        found_elements = self._find_extra_namespace_set_elements_by_id_short(object_.annotation,
+                                                                             expected_value.annotation)
         self.check(found_elements == set(), 'Annotated Reference {} must not have extra '
                                             'references'.format(repr(object_)),
                    value=found_elements)
@@ -454,7 +495,7 @@ class AASDataChecker(DataChecker):
                 return element
         return None
 
-    def _find_specific_asset_id(self, object_: model.SpecificAssetId, search_list: Union[Set, List]) \
+    def _find_specific_asset_id(self, object_: model.SpecificAssetId, search_list: Iterable) \
             -> Union[model.SpecificAssetId, None]:
         """
         Find a SpecificAssetId in an list
@@ -535,31 +576,44 @@ class AASDataChecker(DataChecker):
                 found_elements.add(object_list_element)
         return found_elements
 
-    def _find_extra_elements_by_id_short(self, object_list: model.NamespaceSet, search_list: model.NamespaceSet) -> Set:
+    def _find_extra_namespace_set_elements_by_attribute(self, object_list: model.NamespaceSet,
+                                                        search_list: model.NamespaceSet, attr_name: str) -> Set:
         """
-        Find extra elements that are in object_list but not in search_list
+        Find extra elements that are in object_list but not in search_list by identifying attribute
+
+        :param object_list: List which could contain more objects than the search_list has
+        :param search_list: List which should be searched
+        :param attr_name: Name of the identifying attribute
+        :return: Set of elements that are in object_list but not in search_list
+        """
+        found_elements = set()
+        for object_list_element in object_list:
+            element = search_list.get(attr_name, getattr(object_list_element, attr_name))
+            if element is None:
+                found_elements.add(object_list_element)
+        return found_elements
+
+    def _find_extra_namespace_set_elements_by_id_short(self, object_list: model.NamespaceSet,
+                                                       search_list: model.NamespaceSet) -> Set:
+        """
+        Find extra Referable objects that are in object_list but not in search_list
 
         :param object_list: List which could contain more objects than the search_list has
         :param search_list: List which should be searched
         :return: Set of elements that are in object_list but not in search_list
         """
-        found_elements = set()
-        for object_list_element in object_list:
-            element = search_list.get("id_short", object_list_element.id_short)
-            if element is None:
-                found_elements.add(object_list_element)
-        return found_elements
+        return self._find_extra_namespace_set_elements_by_attribute(object_list, search_list, 'id_short')
 
-    def _check_operation_variable_equal(self, object_: model.OperationVariable,
-                                        expected_value: model.OperationVariable):
+    def _find_extra_namespace_set_elements_by_name(self, object_list: model.NamespaceSet,
+                                                   search_list: model.NamespaceSet) -> Set:
         """
-        Checks if the given OperationVariable objects are equal
+        Find extra Extension object that are in object_list but not in search_list
 
-        :param object_: Given OperationVariable object to check
-        :param expected_value: expected OperationVariable object
-        :return:
+        :param object_list: List which could contain more objects than the search_list has
+        :param search_list: List which should be searched
+        :return: Set of elements that are in object_list but not in search_list
         """
-        self._check_submodel_element(object_.value, expected_value.value)
+        return self._find_extra_namespace_set_elements_by_attribute(object_list, search_list, 'name')
 
     def check_operation_equal(self, object_: model.Operation, expected_value: model.Operation):
         """
@@ -570,18 +624,13 @@ class AASDataChecker(DataChecker):
         :return:
         """
         self._check_abstract_attributes_submodel_element_equal(object_, expected_value)
-        self.check_contained_element_length(object_, 'input_variable', model.OperationVariable,
-                                            len(expected_value.input_variable))
-        self.check_contained_element_length(object_, 'output_variable', model.OperationVariable,
-                                            len(expected_value.output_variable))
-        self.check_contained_element_length(object_, 'in_output_variable', model.OperationVariable,
-                                            len(expected_value.in_output_variable))
-        for iv1, iv2 in zip(object_.input_variable, expected_value.input_variable):
-            self._check_operation_variable_equal(iv1, iv2)
-        for ov1, ov2 in zip(object_.output_variable, expected_value.output_variable):
-            self._check_operation_variable_equal(ov1, ov2)
-        for iov1, iov2 in zip(object_.in_output_variable, expected_value.in_output_variable):
-            self._check_operation_variable_equal(iov1, iov2)
+        for input_nss, expected_nss, attr_name in (
+                (object_.input_variable, expected_value.input_variable, 'input_variable'),
+                (object_.output_variable, expected_value.output_variable, 'output_variable'),
+                (object_.in_output_variable, expected_value.in_output_variable, 'in_output_variable')):
+            self.check_contained_element_length(object_, attr_name, model.SubmodelElement, len(expected_nss))
+            for var1, var2 in zip(input_nss, expected_nss):
+                self._check_submodel_element(var1, var2)
 
     def check_capability_equal(self, object_: model.Capability, expected_value: model.Capability):
         """
@@ -604,25 +653,27 @@ class AASDataChecker(DataChecker):
         self._check_abstract_attributes_submodel_element_equal(object_, expected_value)
         self.check_attribute_equal(object_, 'entity_type', expected_value.entity_type)
         self.check_attribute_equal(object_, 'global_asset_id', expected_value.global_asset_id)
-        if object_.specific_asset_id and expected_value.specific_asset_id:
-            self.check_specific_asset_id(object_.specific_asset_id, expected_value.specific_asset_id)
-        else:
-            if expected_value.specific_asset_id:
-                self.check(expected_value.specific_asset_id is not None,
-                           'SpecificAssetId {} must exist'.format(repr(expected_value.specific_asset_id)),
-                           value=object_.specific_asset_id)
-            else:
-                if object_.specific_asset_id:
-                    self.check(expected_value.specific_asset_id is None, 'Enity {} must not have a '
-                                                                         'specificAssetId'.format(repr(object_)),
-                               value=expected_value.specific_asset_id)
+        self._check_specific_asset_ids_equal(object_.specific_asset_id, expected_value.specific_asset_id, object_)
         self.check_contained_element_length(object_, 'statement', model.SubmodelElement, len(expected_value.statement))
         for expected_element in expected_value.statement:
             element = object_.get_referable(expected_element.id_short)
-            self.check(element is not None, 'Entity {} must exist'.format(repr(expected_element)))
+            self.check(element is not None, f'Entity {repr(expected_element)} must exist')
 
-        found_elements = self._find_extra_elements_by_id_short(object_.statement, expected_value.statement)
-        self.check(found_elements == set(), 'Enity {} must not have extra statements'.format(repr(object_)),
+        found_elements = self._find_extra_namespace_set_elements_by_id_short(object_.statement,
+                                                                             expected_value.statement)
+        self.check(found_elements == set(), f'Enity {repr(object_)} must not have extra statements',
+                   value=found_elements)
+
+    def _check_specific_asset_ids_equal(self, object_: Iterable[model.SpecificAssetId],
+                                        expected_value: Iterable[model.SpecificAssetId],
+                                        object_parent):
+        for expected_pair in expected_value:
+            pair = self._find_specific_asset_id(expected_pair, object_)
+            if self.check(pair is not None, f'SpecificAssetId {repr(expected_pair)} must exist'):
+                self.check_specific_asset_id(pair, expected_pair)  # type: ignore
+
+        found_elements = self._find_extra_object(object_, expected_value, model.SpecificAssetId)
+        self.check(found_elements == set(), f'{repr(object_parent)} must not have extra specificAssetIds',
                    value=found_elements)
 
     def _check_event_element_equal(self, object_: model.EventElement, expected_value: model.EventElement):
@@ -677,8 +728,8 @@ class AASDataChecker(DataChecker):
             except KeyError:
                 self.check(False, 'Submodel Element {} must exist'.format(repr(expected_element)))
 
-        found_elements = self._find_extra_elements_by_id_short(object_.submodel_element,
-                                                               expected_value.submodel_element)
+        found_elements = self._find_extra_namespace_set_elements_by_id_short(object_.submodel_element,
+                                                                             expected_value.submodel_element)
         self.check(found_elements == set(), 'Submodel {} must not have extra submodel elements'.format(repr(object_)),
                    value=found_elements)
 
@@ -722,16 +773,7 @@ class AASDataChecker(DataChecker):
         self.check_attribute_equal(object_, 'global_asset_id', expected_value.global_asset_id)
         self.check_contained_element_length(object_, 'specific_asset_id', model.SpecificAssetId,
                                             len(expected_value.specific_asset_id))
-        for expected_pair in expected_value.specific_asset_id:
-            pair = self._find_specific_asset_id(expected_pair, object_.specific_asset_id)
-            if self.check(pair is not None, 'SpecificAssetId {} must exist'.format(repr(expected_pair))):
-                self.check_specific_asset_id(pair, expected_pair)  # type: ignore
-
-        found_elements = self._find_extra_object(object_.specific_asset_id, expected_value.specific_asset_id,
-                                                 model.SpecificAssetId)
-        self.check(found_elements == set(), '{} must not have extra '
-                                            'specificAssetIds'.format(repr(object_)),
-                   value=found_elements)
+        self._check_specific_asset_ids_equal(object_.specific_asset_id, expected_value.specific_asset_id, object_)
         self.check_attribute_equal(object_, 'asset_type', object_.asset_type)
         if object_.default_thumbnail and expected_value.default_thumbnail:
             self.check_resource_equal(object_.default_thumbnail, expected_value.default_thumbnail)
