@@ -7,13 +7,14 @@
 # SPDX-License-Identifier: MIT
 
 import setuptools
+from basyx.aas import __version__
 
 with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="basyx-python-sdk",
-    version="1.0.0",
+    version=__version__,
     author="The Eclipse BaSyx Authors",
     description="The Eclipse BaSyx Python SDK, an implementation of the Asset Administration Shell for Industry 4.0 "
                 "systems",
@@ -32,14 +33,14 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
     ],
     entry_points={
         'console_scripts': [
             "aas-compliance-check = basyx.aas.compliance_tool.cli:main"
         ]
     },
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=[
         'jsonschema>=4.7,<5',
         'python-dateutil>=2.8,<3',

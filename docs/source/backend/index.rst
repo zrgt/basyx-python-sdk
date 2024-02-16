@@ -1,7 +1,7 @@
-aas.backend - Storing and Retrieving of AAS-objects in Backends
-===============================================================
+basyx.aas.backend - Storing and Retrieving of AAS-objects in Backends
+=====================================================================
 
-.. automodule:: basyx.aas.backend.__init__
+.. automodule:: basyx.aas.backend
 
 .. toctree::
    :maxdepth: 2
@@ -9,3 +9,4 @@ aas.backend - Storing and Retrieving of AAS-objects in Backends
 
    backends
    couchdb
+   local_file

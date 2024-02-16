@@ -13,19 +13,21 @@
 import os
 import sys
 import datetime
+from sphinx.ext import intersphinx
 
 
 sys.path.insert(0, os.path.abspath('../..'))
+from basyx.aas import __version__
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'Eclipse BaSyx Python SDK'
-copyright = str(datetime.datetime.now().year) + ', the Eclipse BaSyx Authors'
+project_copyright = str(datetime.datetime.now().year) + ', the Eclipse BaSyx Authors'
 author = 'The Eclipse BaSyx Authors'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.0'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -37,17 +39,51 @@ release = '0.2.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
+    'sphinx.ext.intersphinx',
     'sphinx_rtd_theme',
     'sphinxarg.ext'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = []
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
+
+# Don't prepend the name of the current module to all classes.
+add_module_names = False
+
+# Include all public documented and undocumented members by default.
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True
+}
+
+# Mapping for correctly linking other module documentations.
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+    'dateutil': ('https://dateutil.readthedocs.io/en/stable/', None),
+    'lxml': ('https://lxml.de/apidoc/', None)
+}
+
+
+def on_missing_reference(app, env, node, contnode):
+    path = node["reftarget"].split(".")
+    # pyecma376_2 doesn't have a documentation we can link to, so suppress missing reference warnings.
+    if path[0] == "pyecma376_2":
+        return contnode
+    # lxml uses _Element instead of Element and _ElementTree instead of ElementTree in its documentation,
+    # causing missing references if untreated.
+    if len(path) > 2 and path[0:2] == ["lxml", "etree"] and path[2] in {"Element", "ElementTree"}:
+        node["reftarget"] = ".".join(path[0:2] + ["_" + path[2]] + path[3:])
+        return intersphinx.resolve_reference_in_inventory(env, "lxml", node, contnode)
+    return None
+
+
+def setup(app):
+    app.connect("missing-reference", on_missing_reference)
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -60,4 +96,18 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path = ['_static']
+
+# Fix white-space wrapping in tables.
+# See https://github.com/readthedocs/sphinx_rtd_theme/issues/1505
+# Once fixed, this can be removed and '_static' can be removed from html_static_path.
+html_style = 'custom.css'
+
+# Configuration of the 'Edit on GitHub' button at the top right.
+html_context = {
+    'display_github': True,
+    'github_user': 'eclipse-basyx',
+    'github_repo': 'basyx-python-sdk',
+    'github_version': release,
+    'conf_py_path': '/docs/source/'
+}

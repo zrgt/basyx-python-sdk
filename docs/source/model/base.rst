@@ -1,19 +1,44 @@
-aas.model.base - Abstract Classes and Basic Structures
-======================================================
+base - Abstract Classes and Basic Structures
+============================================
 
 .. automodule:: basyx.aas.model.base
-      :members:
+    :exclude-members: ConstrainedList, LangStringSet
 
-.. class:: LangStringSet
+    .. autoclass:: ConstrainedList
+          :exclude-members: clear
 
-    A dict of language-Identifier (according to ISO 639-1 and ISO 3166-1) and string in this language.
-    The meaning of the string in each language is the same.
-
-    <<Data Type>>
-
-    Example: ["en-US", "germany"]
+    .. autoclass:: LangStringSet
+          :exclude-members: clear
 
 
-.. class:: ValueList
+Constrained String Datatypes
+----------------------------
 
-    A Set of :class:`ValueReferencePairs <aas.model.base.ValueReferencePair>`
+These types are aliases of :class:`str` and constrained by a setter where used.
+
+.. autoclass:: ContentType
+.. autoclass:: Identifier
+.. autoclass:: LabelType
+.. autoclass:: MessageTopicType
+.. autoclass:: NameType
+.. autoclass:: PathType
+.. autoclass:: QualifierType
+.. autoclass:: RevisionType
+.. autoclass:: ShortNameType
+.. autoclass:: VersionType
+.. autoclass:: ValueTypeIEC61360
+
+
+Type Aliases
+------------
+.. autoclass:: DataTypeDefXsd
+.. autoclass:: ValueDataType
+.. autoclass:: ValueList
+.. autoclass:: BlobType
+
+
+Type Variables
+--------------
+.. autoclass:: _NSO
+.. autoclass:: _RT
+.. autoclass:: _T

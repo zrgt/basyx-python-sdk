@@ -22,32 +22,33 @@ class SubmodelElement(base.Referable, base.Qualifiable, base.HasSemantics,
     """
     A submodel element is an element suitable for the description and differentiation of assets.
 
-    *Note:* The concept of type and instance applies to submodel elements. :class:`Properties <.Property>` are special
-    submodel elements. The property types are defined in dictionaries (like the IEC Common Data Dictionary or eCl\\@ss),
-    they do not have a value. The property type (`kind=Type`) is also called data element type in some standards.
-    The property instances (`kind=Instance`) typically have a value. A property instance is also called
-    property-value pair in certain standards.
+    .. note::
+        The concept of type and instance applies to submodel elements. :class:`Properties <.Property>` are special
+        submodel elements. The property types are defined in dictionaries (like the IEC Common Data Dictionary or
+        eCl\\@ss), they do not have a value. The property type (``kind=Type``) is also called data element type in some
+        standards. The property instances (``kind=Instance``) typically have a value. A property instance is also called
+        property-value pair in certain standards.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     @abc.abstractmethod
@@ -89,33 +90,32 @@ class Submodel(base.Identifiable, base.HasSemantics, base.HasKind, base.Qualifia
     into distinguishable parts. Each submodel refers to a well-defined domain or subject matter. Submodels can become
     standardized and thus become submodel types. Submodels can have different life-cycles.
 
-    :ivar ~.id: The globally unique id of the element.
-                            (inherited from :class:`~aas.model.base.Identifiable`)
+    :ivar id: The globally unique id of the element. (inherited from :class:`~basyx.aas.model.base.Identifiable`)
     :ivar submodel_element: Unordered list of :class:`SubmodelElements <.SubmodelElement>`
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar administration: Administrative information of an identifiable element. (inherited from
-                          :class:`~aas.model.base.Identifiable`)
+                          :class:`~basyx.aas.model.base.Identifiable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
-    :ivar kind: Kind of the element: Either `TYPE` or `INSTANCE`. Default is `INSTANCE`. (inherited from
-                :class:`aas.model.base.HasKind`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
+    :ivar kind: Kind of the element: Either ``TYPE`` or ``INSTANCE``. Default is ``INSTANCE``. (inherited from
+                :class:`~basyx.aas.model.base.HasKind`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -169,25 +169,25 @@ class DataElement(SubmodelElement, metaclass=abc.ABCMeta):
     <<abstract>>
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     @abc.abstractmethod
@@ -225,32 +225,32 @@ class Property(DataElement):
     """
     A property is a :class:`DataElement` that has a single value.
 
-    *Constraint AASd-007:* If both, the value and the valueId of a Qualifier are present,
-        the value needs to be identical to the value of the referenced coded value in Qualifier/valueId.
+    **Constraint AASd-007:** If both, the value and the valueId of a Qualifier are present,
+    the value needs to be identical to the value of the referenced coded value in Qualifier/valueId.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar value_type: Data type of the value
     :ivar value: The value of the property instance.
-    :ivar value_id: :class:`~aas.model.base.Reference` to the global unique id of a coded value
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar value_id: :class:`~basyx.aas.model.base.Reference` to the global unique id of a coded value
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -295,32 +295,32 @@ class MultiLanguageProperty(DataElement):
     """
     A multi language property is a :class:`~.DataElement` that has a multi language value.
 
-    *Constraint AASd-012*: if both the MultiLanguageProperty/value and the MultiLanguageProperty/valueId are present,
-        the meaning must be the same for each string in a specific language,
-        as specified inMultiLanguageProperty/valueId.
+    **Constraint AASd-012:** if both the MultiLanguageProperty/value and the MultiLanguageProperty/valueId are present,
+    the meaning must be the same for each string in a specific language,
+    as specified inMultiLanguageProperty/valueId.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar value: The value of the property instance.
-    :ivar value_id: :class:`~aas.model.base.Reference` to the global unique id of a coded value
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar value_id: :class:`~basyx.aas.model.base.Reference` to the global unique id of a coded value
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -351,33 +351,33 @@ class Range(DataElement):
     """
     A range is a :class:`~.DataElement` that has a range value.
 
-    *Constraint AASd-013:* In case of a range with `kind=Instance` either the min or the max value or both
-        need to be defined
+    **Constraint AASd-013:** In case of a range with ``kind=Instance`` either the min or the max value or both
+    need to be defined
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar value_type: Data type of the min and max
     :ivar min: The minimum value of the range. If the min value is missing then the value is assumed to be negative
                infinite
     :ivar max: The maximum of the range. If the max value is missing then the value is assumed to be positive infinite
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -434,32 +434,33 @@ class Blob(DataElement):
     A BLOB is a :class:`~.DataElement` that represents a file that is contained with its source code in the value
     attribute.
 
-    *Note:* In contrast to the file property the file content is stored directly as value in the Blob data element.
+    .. note::
+        In contrast to the file property the file content is stored directly as value in the Blob data element.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar content_type: Mime type of the content of the BLOB. The mime type states which file extension the file has.
                      Valid values are e.g. “application/json”, “application/xls”, ”image/jpg”. The allowed values
                      are defined as in RFC2046.
     :ivar value: The value of the BLOB instance of a blob data element.
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -493,27 +494,27 @@ class File(DataElement):
     A File is a :class:`~.DataElement` that represents a file via its path description.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar content_type: Mime type of the content of the File.
     :ivar value: Path and name of the referenced file (with file extension). The path can be absolute or relative.
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -542,31 +543,33 @@ class File(DataElement):
 
 class ReferenceElement(DataElement):
     """
-    A reference element is a :class:`DataElement` that defines a :class:`~aas.model.base.Reference` to another element
-    within the same or another AAS or a :class:`~aas.model.base.Reference` to an external object or entity.
+    A reference element is a :class:`DataElement` that defines a :class:`~basyx.aas.model.base.Reference` to another
+    element within the same or another AAS or a :class:`~basyx.aas.model.base.Reference` to an external object
+    or entity.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar value: :class:`~aas.model.base.Reference` to any other :class:`~aas.model.base.Referable` element of the same
-                 or any other AAS or a :class:`~aas.model.base.Reference` to an external object or entity.
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar value: :class:`~basyx.aas.model.base.Reference` to any other :class:`~basyx.aas.model.base.Referable` element
+                 of the same or any other AAS or a :class:`~basyx.aas.model.base.Reference` to an external object
+                 or entity.
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -596,26 +599,26 @@ class SubmodelElementCollection(SubmodelElement, base.UniqueIdShortNamespace):
     A submodel element collection is a set or list of :class:`SubmodelElements <.SubmodelElement>`.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar value: list of :class:`SubmodelElements <.SubmodelElement>`
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     def __init__(self,
@@ -644,20 +647,24 @@ class SubmodelElementList(SubmodelElement, base.UniqueIdShortNamespace, Generic[
     A submodel element list is an ordered list of :class:`SubmodelElements <.SubmodelElement>`.
     The numbering starts with Zero (0).
 
-    *Constraint AASd-107:* If a first level child element in a :class:`SubmodelElementList` has a semanticId it shall be
-        identical to SubmodelElementList/semanticIdListElement.
-    *Constraint AASd-114:* If two first level child elements in a :class:`SubmodelElementList` have a semanticId then
-        they shall be identical.
-    *Constraint AASd-115:* If a first level child element in a :class:`SubmodelElementList` does not specify a
-        semanticId, the value is assumed to be identical to SubmodelElementList/semanticIdListElement.
-    *Constraint AASd-108:* All first level child elements in a :class:`SubmodelElementList` shall have the same
-        submodel element type as specified in SubmodelElementList/typeValueListElement.
-    *Constraint AASd-109:* If SubmodelElementList/typeValueListElement is equal to Property or Range,
-        SubmodelElementList/valueTypeListElement shall be set and all first level child elements in the
-        :class:`SubmodelElementList` shall have the value type as specified in SubmodelElementList/valueTypeListElement.
+    **Constraint AASd-107:** If a first level child element in a :class:`SubmodelElementList` has a semanticId it shall
+    be identical to SubmodelElementList/semanticIdListElement.
+
+    **Constraint AASd-114:** If two first level child elements in a :class:`SubmodelElementList` have a semanticId then
+    they shall be identical.
+
+    **Constraint AASd-115:** If a first level child element in a :class:`SubmodelElementList` does not specify a
+    semanticId, the value is assumed to be identical to SubmodelElementList/semanticIdListElement.
+
+    **Constraint AASd-108:** All first level child elements in a :class:`SubmodelElementList` shall have the same
+    submodel element type as specified in SubmodelElementList/typeValueListElement.
+
+    **Constraint AASd-109:** If SubmodelElementList/typeValueListElement is equal to Property or Range,
+    SubmodelElementList/valueTypeListElement shall be set and all first level child elements in the
+    :class:`SubmodelElementList` shall have the value type as specified in SubmodelElementList/valueTypeListElement.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar type_value_list_element: The :class:`SubmodelElement` type of the submodel elements contained in the list.
     :ivar value: :class:`SubmodelElements <.SubmodelElement>` contained in the list. The list is ordered.
     :ivar semantic_id_list_element: Semantic ID of the :class:`SubmodelElements <.SubmodelElement>` contained in the
@@ -665,24 +672,24 @@ class SubmodelElementList(SubmodelElement, base.UniqueIdShortNamespace, Generic[
     :ivar value_type_list_element: The value type of the submodel element contained in the list.
     :ivar order_relevant: Defines whether order in list is relevant. If False the list is representing a set or a bag.
                           Default: True
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     def __init__(self,
@@ -772,14 +779,15 @@ class SubmodelElementList(SubmodelElement, base.UniqueIdShortNamespace, Generic[
                                                    f"semantic_id, got {new!r} with semantic_id={new.semantic_id!r}")
 
         # If we got here we know that `new` is an instance of type_value_list_element and that type_value_list_element
-        # is either Property or Range. Thus, `new` must have the value_type property. Ignore the type here because
-        # the typechecker doesn't get it.
+        # is either Property or Range. Thus, `new` must have the value_type property.
+        # Furthermore, value_type_list_element cannot be None, as this is already checked in __init__().
+        # Ignore the types here because the typechecker doesn't get it.
         if self.type_value_list_element in (Property, Range) \
                 and new.value_type is not self.value_type_list_element:  # type: ignore
             raise base.AASConstraintViolation(109, "All first level elements must have the value_type "  # type: ignore
                                                    "specified by value_type_list_element="
-                                                   f"{self.value_type_list_element.__name__}, got {new!r} with "
-                                                   f"value_type={new.value_type.__name__}")  # type: ignore
+                                                   f"{self.value_type_list_element.__name__}, got "  # type: ignore
+                                                   f"{new!r} with value_type={new.value_type.__name__}")  # type: ignore
 
         # If semantic_id_list_element is not None that would already enforce the semantic_id for all first level
         # elements. Thus, we only need to perform this check if semantic_id_list_element is None.
@@ -822,32 +830,33 @@ class SubmodelElementList(SubmodelElement, base.UniqueIdShortNamespace, Generic[
 
 class RelationshipElement(SubmodelElement):
     """
-    A relationship element is used to define a relationship between two :class:`~aas.model.base.Referable` elements.
+    A relationship element is used to define a relationship between two :class:`~basyx.aas.model.base.Referable`
+    elements.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar first: Reference to the first element in the relationship taking the role of the subject which have to
                  be of class Referable. (inherited from :class:`~.RelationshipElement`)
     :ivar second: Reference to the second element in the relationship taking the role of the object which have to
                   be of class Referable. (inherited from :class:`~.RelationshipElement`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -880,31 +889,31 @@ class AnnotatedRelationshipElement(RelationshipElement, base.UniqueIdShortNamesp
     with additional :class:`DataElements <.DataElement>`.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar first: Reference to the first element in the relationship taking the role of the subject which have to
                  be of class Referable. (inherited from :class:`~.RelationshipElement`)
     :ivar second: Reference to the second element in the relationship taking the role of the object which have to
                   be of class Referable. (inherited from :class:`~.RelationshipElement`)
     :ivar annotation: Unordered list of :class:`DataElements <.DataElement>` that hold for the relationship between two
                       elements
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -936,38 +945,38 @@ class Operation(SubmodelElement, base.UniqueIdShortNamespace):
     An operation is a :class:`~.SubmodelElement` with input and output variables.
 
     In- and output variables are implemented as :class:`SubmodelElements <.SubmodelElement>` directly without the
-    wrapping `OperationVariable`. This makes implementing *Constraint AASd-134* much easier since we can just use normal
-    :class:`NamespaceSets <~aas.model.base.NamespaceSet>`. Furthermore, an `OperationVariable` contains nothing besides
-    a single :class:`~.SubmodelElement` anyway, so implementing it would just make using `Operations` more tedious
-    for no reason.
+    wrapping ``OperationVariable``. This makes implementing *Constraint AASd-134* much easier since we can just
+    use normal :class:`NamespaceSets <basyx.aas.model.base.NamespaceSet>`. Furthermore, an ``OperationVariable``
+    contains nothing besides a single :class:`~.SubmodelElement` anyway, so implementing it would just make using
+    ``Operations`` more tedious for no reason.
 
-    *Constraint AASd-134:* For an Operation, the idShort of all inputVariable/value, outputVariable/value,
-                           and inoutputVariable/value shall be unique.
+    **Constraint AASd-134:** For an Operation, the idShort of all inputVariable/value, outputVariable/value,
+    and inoutputVariable/value shall be unique.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar input_variable: List of input parameters (:class:`SubmodelElements <.SubmodelElement>`) of the operation
     :ivar output_variable: List of output parameters (:class:`SubmodelElements <.SubmodelElement>`) of the operation
     :ivar in_output_variable: List of parameters (:class:`SubmodelElements <.SubmodelElement>`) that are input and
                               output of the operation
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     def __init__(self,
@@ -1001,25 +1010,25 @@ class Capability(SubmodelElement):
     in the physical or virtual world
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                     It affects the expected existence of attributes and the applicability of constraints.
-                    (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                    (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -1046,36 +1055,36 @@ class Entity(SubmodelElement, base.UniqueIdShortNamespace):
     """
     An entity is a :class:`~.SubmodelElement` that is used to model entities
 
-    *Constraint AASd-014:* global_asset_id or specific_asset_id must be set if :attr:`~.entity_type` is set to
-        :attr:`~.EntityType.SELF_MANAGED_ENTITY`. They must be empty otherwise.
+    **Constraint AASd-014:** global_asset_id or specific_asset_id must be set if ``entity_type`` is set to
+    :attr:`~basyx.aas.model.base.EntityType.SELF_MANAGED_ENTITY`. They must be empty otherwise.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
     :ivar entity_type: Describes whether the entity is a co-managed or a self-managed entity.
     :ivar statement: Unordered list of statements (:class:`SubmodelElements <.SubmodelElement>`) applicable to the
                      entity, typically with a qualified value.
-    :ivar global_asset_id: Global :class:`~aas.model.base.Identifier` of the asset the entity is representing.
-    :ivar specific_asset_id: :class:`~aas.model.base.Reference` to an identifier key value pair representing a specific
-                             identifier of the asset represented by the asset administration shell.
-                             See Constraint AASd-014
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar global_asset_id: Global :class:`~basyx.aas.model.base.Identifier` of the asset the entity is representing.
+    :ivar specific_asset_id: :class:`~basyx.aas.model.base.Reference` to an identifier key value pair representing a
+                             specific identifier of the asset represented by the asset administration shell.
+                             See *Constraint AASd-014*
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 
@@ -1179,25 +1188,25 @@ class EventElement(SubmodelElement, metaclass=abc.ABCMeta):
     <<abstract>>
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
     :ivar extension: An extension of the element. (inherited from
-                     :class:`aas.model.base.HasExtension`)
+                     :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
     @abc.abstractmethod
@@ -1222,22 +1231,26 @@ class BasicEventElement(EventElement):
     A basic event element.
 
     :ivar id_short: Identifying string of the element within its name space. (inherited from
-                    :class:`~aas.model.base.Referable`)
-    :ivar observed: :class:`~aas.model.base.ModelReference` to the Referable, which defines the scope of the event.
-                    Can be :class:`~aas.model.aas.AssetAdministrationShell`, :class:`~aas.model.submodel.Submodel`
-                    or :class:`~aas.model.submodel.SubmodelElement`. Reference to a referable, e.g. a data element
+                    :class:`~basyx.aas.model.base.Referable`)
+    :ivar observed: :class:`~basyx.aas.model.base.ModelReference` to the Referable, which defines the scope of
+                    the event. Can be :class:`~basyx.aas.model.aas.AssetAdministrationShell`,
+                    :class:`~basyx.aas.model.submodel.SubmodelElement` or
+                    :class:`~basyx.aas.model.submodel.SubmodelElement`. Reference to a referable, e.g. a data element
                     or a submodel, that is being observed.
-    :ivar direction: Direction of event as :class:`~aas.model.base.Direction`.
-    :ivar state: State of event as :class:`~aas.model.base.StateOfEvent`.
+    :ivar direction: Direction of event as :class:`~basyx.aas.model.base.Direction`.
+    :ivar state: State of event as :class:`~basyx.aas.model.base.StateOfEvent`.
     :ivar message_topic: Information for the outer message infrastructure for scheduling the event to the respective
                          communication channel.
     :ivar message_broker: Information, which outer message infrastructure shall handle messages for the EventElement.
-                          Refers to a :class:`~aas.model.submodel.Submodel`,
-                          :class:`~aas.model.submodel.SubmodelElementList`,
-                          :class:`~aas.model.submodel.SubmodelElementCollection` or :class:`~aas.model.submodel.Entity`,
-                          which contains DataElements describing the proprietary specification for the message broker.
-                          Note: for different message infrastructure, e.g. OPC UA or MQTT or AMQP, this proprietary
-                          specification could be standardized by having respective Submodels.
+                          Refers to a :class:`~basyx.aas.model.submodel.SubmodelElement`,
+                          :class:`~basyx.aas.model.submodel.SubmodelElementList`,
+                          :class:`~basyx.aas.model.submodel.SubmodelElementCollection` or
+                          :class:`~basyx.aas.model.submodel.Entity`, which contains DataElements describing
+                          the proprietary specification for the message broker.
+
+                          .. note::
+                            For different message infrastructure, e.g. OPC UA or MQTT or AMQP, this proprietary
+                            specification could be standardized by having respective Submodels.
     :ivar last_update: Timestamp in UTC, when the last event was received (input direction) or sent (output direction).
     :ivar min_interval: For input direction, reports on the maximum frequency, the software entity behind the respective
                         Referable can handle input events. For output events, specifies the maximum frequency of
@@ -1245,23 +1258,23 @@ class BasicEventElement(EventElement):
     :ivar max_interval: For input direction: not applicable.
                         For output direction: maximum interval in time, the respective Referable shall send an update of
                         the status of the event, even if no other trigger condition for the event was not met.
-    :ivar display_name: Can be provided in several languages. (inherited from :class:`~aas.model.base.Referable`)
+    :ivar display_name: Can be provided in several languages. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar category: The category is a value that gives further meta information w.r.t. to the class of the element.
                      It affects the expected existence of attributes and the applicability of constraints.
-                     (inherited from :class:`~aas.model.base.Referable`)
-    :ivar description: Description or comments on the element. (inherited from :class:`~aas.model.base.Referable`)
+                     (inherited from :class:`~basyx.aas.model.base.Referable`)
+    :ivar description: Description or comments on the element. (inherited from :class:`~basyx.aas.model.base.Referable`)
     :ivar parent: Reference to the next referable parent element of the element. (inherited from
-                  :class:`~aas.model.base.Referable`)
+                  :class:`~basyx.aas.model.base.Referable`)
     :ivar semantic_id: Identifier of the semantic definition of the element. It is called semantic id of the
                        element. The semantic id may either reference an external global id or it may reference a
                        referable model element of kind=Type that defines the semantics of the element.
-                       (inherited from :class:`~aas.model.base.HasSemantics`)
+                       (inherited from :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar qualifier: Unordered list of Qualifiers that gives additional qualification of a qualifiable element.
-                     (from :class:`~aas.model.base.Qualifiable`)
-    :ivar extension: An extension of the element. (inherited from :class:`aas.model.base.HasExtension`)
+                     (from :class:`~basyx.aas.model.base.Qualifiable`)
+    :ivar extension: An extension of the element. (inherited from :class:`basyx.aas.model.base.HasExtension`)
     :ivar supplemental_semantic_id: Identifier of a supplemental semantic definition of the element. It is called
                                     supplemental semantic ID of the element. (inherited from
-                                    :class:`~aas.model.base.HasSemantics`)
+                                    :class:`~basyx.aas.model.base.HasSemantics`)
     :ivar embedded_data_specifications: List of Embedded data specification.
     """
 

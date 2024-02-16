@@ -1,5 +1,5 @@
-aas.examples - Example classes
-==============================
+basyx.aas.examples - Example classes
+====================================
 
 .. toctree::
    :maxdepth: 2
@@ -8,6 +8,5 @@ aas.examples - Example classes
    example_aas
    example_aas_mandatory_attributes
    example_aas_missing_attributes
-   example_concept_description
    example_submodel_template
-
+   _helper

@@ -44,6 +44,15 @@ SPDX-License-Identifier: MIT
 For more information, especially considering the licenses of included third-party works, please consult the `NOTICE`
 file.
 
+## Release Schedule
+
+The Eclipse BaSyx-Python SDK Team evaluates bi-monthly the newly added commits to the main branch towards the need 
+of releasing a new version.
+If decided the changes warrant a release, it is initiated, using semantic versioning for the new release number.
+If the changes do not warrant a release, the decision is postponed to the next meeting.
+
+Additionally, security fixes may be released at any point.
+
 
 ## Dependencies
 
@@ -60,12 +69,8 @@ dependencies (MIT License, Apache License, PSF License)
 
 Development/testing/documentation/example dependencies (see `requirements.txt`):
 * `jsonschema` and its dependencies (MIT License, Apache License, PSF License)
-* `psutil` (BSD 3-clause License)
-* `Sphinx` and its dependencies (multiple licenses)
-* `sphinx-rtd-theme` and its dependencies
-* `sphinx-argparse` (MIT License)
 
-Dependencies for building the documentation:
+Dependencies for building the documentation (see `docs/add-requirements.txt`):
 * `Sphinx` and its dependencies (BSD 2-clause License, MIT License, Apache License)
 * `sphinx-rtd-theme` and its dependencies (MIT License, PSF License)
 * `sphinx-argparse` (MIT License)

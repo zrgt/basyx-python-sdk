@@ -1,6 +1,4 @@
-aas.backend.couchdb - Store and Retrieve AAS-objects in an CouchDB Backend
-==========================================================================
-
+couchdb - Store and Retrieve AAS-objects in a CouchDB
+=====================================================
 
 .. automodule:: basyx.aas.backend.couchdb
-      :members:
