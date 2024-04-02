@@ -19,8 +19,8 @@ objects by identification and resolving references.
 # step 4: using the ObjectStore to resolve a reference
 
 
-from basyx.aas import model
-from basyx.aas.model import Asset, AssetAdministrationShell, Submodel
+from basyx2.aas import model
+from basyx2.aas.model import Asset, AssetAdministrationShell, Submodel
 
 
 ###########################################################################

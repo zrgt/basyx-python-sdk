@@ -13,9 +13,9 @@ import unittest
 import warnings
 
 import pyecma376_2
-from basyx.aas import model
-from basyx.aas.adapter import aasx
-from basyx.aas.examples.data import example_aas, example_aas_mandatory_attributes, _helper
+from basyx2.aas import model
+from basyx2.aas.adapter import aasx
+from basyx2.aas.examples.data import example_aas, example_aas_mandatory_attributes, _helper
 
 
 class TestAASXUtils(unittest.TestCase):

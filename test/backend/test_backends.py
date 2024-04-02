@@ -8,8 +8,8 @@
 from typing import List
 import unittest
 
-from basyx.aas.backend import backends
-from basyx.aas.model import Referable
+from basyx2.aas.backend import backends
+from basyx2.aas.model import Referable
 
 
 class ExampleBackend(backends.Backend):

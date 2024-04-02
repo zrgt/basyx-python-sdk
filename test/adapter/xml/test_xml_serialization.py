@@ -9,10 +9,10 @@ import unittest
 
 from lxml import etree  # type: ignore
 
-from basyx.aas import model
-from basyx.aas.adapter.xml import write_aas_xml_file, xml_serialization, XML_SCHEMA_FILE
+from basyx2.aas import model
+from basyx2.aas.adapter.xml import write_aas_xml_file, xml_serialization, XML_SCHEMA_FILE
 
-from basyx.aas.examples.data import example_concept_description, example_aas_missing_attributes, example_aas, \
+from basyx2.aas.examples.data import example_concept_description, example_aas_missing_attributes, example_aas, \
     example_submodel_template, example_aas_mandatory_attributes
 
 

@@ -86,8 +86,9 @@ The following code example shows how to create a `Submodel` with a `Property` se
 Eclipse BaSyx Python SDK:
 
 Create a `Submodel`:
+
 ```python
-from basyx.aas import model  # Import all BaSyx Python SDK classes from the model package
+from basyx2.aas import model  # Import all BaSyx Python SDK classes from the model package
 
 identifier = model.Identifier('https://acplt.org/Simple_Submodel', model.IdentifierType.IRI)
 submodel = model.Submodel(identification=identifier)
@@ -114,8 +115,9 @@ submodel.submodel_element.add(property)
 ```
 
 Serialize the `Submodel` to XML:
+
 ```python
-from basyx.aas.adapter.xml import write_aas_xml_file
+from basyx2.aas.adapter.xml import write_aas_xml_file
 
 data: model.DictObjectStore[model.Identifiable] = model.DictObjectStore()
 data.add(submodel)
@@ -128,11 +130,11 @@ with open('Simple_Submodel.xml', 'wb') as f:
 
 For further examples and tutorials, check out the `basyx.aas.examples`-package. Here is a quick overview:
 
-* [`tutorial_create_simple_aas`](./basyx/aas/examples/tutorial_create_simple_aas.py): Create an Asset Administration Shell, including an Asset object and a Submodel
-* [`tutorial_storage`](./basyx/aas/examples/tutorial_storage.py): Manage a larger number of Asset Administration Shells in an ObjectStore and resolve references
-* [`tutorial_serialization_deserialization`](./basyx/aas/examples/tutorial_serialization_deserialization.py): Use the JSON and XML serialization/deserialization for single objects or full standard-compliant files
-* [`tutorial_aasx`](./basyx/aas/examples/tutorial_aasx.py): Export Asset Administration Shells with related objects and auxiliary files to AASX package files
-* [`tutorial_backend_couchdb`](./basyx/aas/examples/tutorial_backend_couchdb.py): Use the *Backends* interface (`update()/commit()` methods) to manage and retrieve AAS objects in a CouchDB document database
+* [`tutorial_create_simple_aas`](basyx2/aas/examples/tutorial_create_simple_aas.py): Create an Asset Administration Shell, including an Asset object and a Submodel
+* [`tutorial_storage`](basyx2/aas/examples/tutorial_storage.py): Manage a larger number of Asset Administration Shells in an ObjectStore and resolve references
+* [`tutorial_serialization_deserialization`](basyx2/aas/examples/tutorial_serialization_deserialization.py): Use the JSON and XML serialization/deserialization for single objects or full standard-compliant files
+* [`tutorial_aasx`](basyx2/aas/examples/tutorial_aasx.py): Export Asset Administration Shells with related objects and auxiliary files to AASX package files
+* [`tutorial_backend_couchdb`](basyx2/aas/examples/tutorial_backend_couchdb.py): Use the *Backends* interface (`update()/commit()` methods) to manage and retrieve AAS objects in a CouchDB document database
 
 
 ### Documentation

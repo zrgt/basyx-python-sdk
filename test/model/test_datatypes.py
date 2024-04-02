@@ -10,7 +10,7 @@ import unittest
 
 import dateutil
 
-from basyx.aas import model
+from basyx2.aas import model
 
 
 class TestIntTypes(unittest.TestCase):

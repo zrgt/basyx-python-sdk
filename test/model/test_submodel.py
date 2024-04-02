@@ -7,7 +7,7 @@
 
 import unittest
 
-from basyx.aas import model
+from basyx2.aas import model
 
 
 class EntityTest(unittest.TestCase):

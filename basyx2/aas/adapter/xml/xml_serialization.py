@@ -22,7 +22,7 @@ from lxml import etree  # type: ignore
 from typing import Dict, IO, Optional
 import base64
 
-from basyx.aas import model
+from basyx2.aas import model
 from .. import _generic
 
 

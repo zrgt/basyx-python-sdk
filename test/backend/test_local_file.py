@@ -9,8 +9,8 @@ import shutil
 import unittest
 import unittest.mock
 
-from basyx.aas.backend import local_file
-from basyx.aas.examples.data.example_aas import *
+from basyx2.aas.backend import local_file
+from basyx2.aas.examples.data.example_aas import *
 
 
 store_path: str = os.path.dirname(__file__) + "/local_file_test_folder"

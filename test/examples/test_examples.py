@@ -6,10 +6,10 @@
 # SPDX-License-Identifier: MIT
 import unittest
 
-from basyx.aas.examples.data import example_aas, example_aas_mandatory_attributes, example_aas_missing_attributes, \
+from basyx2.aas.examples.data import example_aas, example_aas_mandatory_attributes, example_aas_missing_attributes, \
     example_concept_description, example_submodel_template
-from basyx.aas.examples.data._helper import AASDataChecker
-from basyx.aas import model
+from basyx2.aas.examples.data._helper import AASDataChecker
+from basyx2.aas import model
 
 
 class ExampleAASTest(unittest.TestCase):

@@ -21,7 +21,7 @@ import urllib3  # type: ignore
 
 from . import backends
 from ..adapter.json import json_serialization, json_deserialization
-from basyx.aas import model
+from basyx2.aas import model
 
 
 logger = logging.getLogger(__name__)

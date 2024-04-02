@@ -10,7 +10,7 @@ implementation to the respective string and vice versa.
 """
 from typing import Dict, Type
 
-from basyx.aas import model
+from basyx2.aas import model
 
 MODELING_KIND: Dict[model.ModelingKind, str] = {
     model.ModelingKind.TEMPLATE: 'Template',

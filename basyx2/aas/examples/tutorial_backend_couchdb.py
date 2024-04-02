@@ -12,8 +12,8 @@ source.
 from configparser import ConfigParser
 from pathlib import Path
 
-import basyx.aas.examples.data.example_aas
-import basyx.aas.backend.couchdb
+import basyx2.aas.examples.data.example_aas
+import basyx2.aas.backend.couchdb
 
 # To execute this tutorial, you'll need a running CouchDB server, including an empty database and a user account with
 # access to that database.
@@ -60,10 +60,10 @@ couchdb_password = config['couchdb']['password']
 # Provide the login credentials to the CouchDB backend.
 # These credetials are used, whenever communication with this CouchDB server is required (either via the
 # CouchDBObjectStore or via the update()/commit() backend.
-basyx.aas.backend.couchdb.register_credentials(couchdb_url, couchdb_user, couchdb_password)
+basyx2.aas.backend.couchdb.register_credentials(couchdb_url, couchdb_user, couchdb_password)
 
 # Now, we create a CouchDBObjectStore as an interface for managing the objects in the CouchDB server.
-object_store = basyx.aas.backend.couchdb.CouchDBObjectStore(couchdb_url, couchdb_database)
+object_store = basyx2.aas.backend.couchdb.CouchDBObjectStore(couchdb_url, couchdb_database)
 
 
 #####################################################
@@ -71,8 +71,8 @@ object_store = basyx.aas.backend.couchdb.CouchDBObjectStore(couchdb_url, couchdb
 #####################################################
 
 # Create some example objects
-example_submodel1 = basyx.aas.examples.data.example_aas.create_example_asset_identification_submodel()
-example_submodel2 = basyx.aas.examples.data.example_aas.create_example_bill_of_material_submodel()
+example_submodel1 = basyx2.aas.examples.data.example_aas.create_example_asset_identification_submodel()
+example_submodel2 = basyx2.aas.examples.data.example_aas.create_example_bill_of_material_submodel()
 
 # The CouchDBObjectStore behaves just like other ObjectStore implementations (see `tutorial_storage.py`). The objects
 # are transferred to the CouchDB immediately. Additionally, the `source` attribute is set automatically, so update() and
@@ -96,7 +96,7 @@ example_submodel1.update()
 
 # Make some changes to a Property within the submodel
 prop = example_submodel1.get_referable('ManufacturerName')
-assert isinstance(prop, basyx.aas.model.Property)
+assert isinstance(prop, basyx2.aas.model.Property)
 
 prop.value = "RWTH Aachen"
 

@@ -14,13 +14,13 @@ import io
 
 import tempfile
 
-import basyx.aas.compliance_tool
-from basyx.aas import model
-from basyx.aas.adapter import aasx
-from basyx.aas.adapter.json import read_aas_json_file
-from basyx.aas.adapter.xml import read_aas_xml_file
-from basyx.aas.examples.data import create_example
-from basyx.aas.examples.data._helper import AASDataChecker
+import basyx2.aas.compliance_tool
+from basyx2.aas import model
+from basyx2.aas.adapter import aasx
+from basyx2.aas.adapter.json import read_aas_json_file
+from basyx2.aas.adapter.xml import read_aas_xml_file
+from basyx2.aas.examples.data import create_example
+from basyx2.aas.examples.data._helper import AASDataChecker
 
 
 def _run_compliance_tool(*compliance_tool_args, **kwargs) -> subprocess.CompletedProcess:
@@ -31,8 +31,8 @@ def _run_compliance_tool(*compliance_tool_args, **kwargs) -> subprocess.Complete
     """
     env = os.environ.copy()
     env['PYTHONPATH'] = "{}:{}".format(os.environ.get('PYTHONPATH', ''),
-                                       os.path.join(os.path.dirname(basyx.__file__), os.pardir))
-    compliance_tool_path = os.path.join(os.path.dirname(basyx.aas.compliance_tool.__file__), 'cli.py')
+                                       os.path.join(os.path.dirname(basyx2.__file__), os.pardir))
+    compliance_tool_path = os.path.join(os.path.dirname(basyx2.aas.compliance_tool.__file__), 'cli.py')
     return subprocess.run([sys.executable, compliance_tool_path] + list(compliance_tool_args), stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE, env=env, **kwargs)
 

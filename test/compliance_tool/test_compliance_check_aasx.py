@@ -7,8 +7,8 @@
 import os
 import unittest
 
-from basyx.aas.compliance_tool import compliance_check_aasx as compliance_tool
-from basyx.aas.compliance_tool.state_manager import ComplianceToolStateManager, Status
+from basyx2.aas.compliance_tool import compliance_check_aasx as compliance_tool
+from basyx2.aas.compliance_tool.state_manager import ComplianceToolStateManager, Status
 
 
 class ComplianceToolAASXTest(unittest.TestCase):
