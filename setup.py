@@ -12,7 +12,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="basyx-python-sdk",
+    name="basyx-python-sdk-2",
     version="0.2.2",
     author="The Eclipse BaSyx Authors",
     description="The Eclipse BaSyx Python SDK, an implementation of the Asset Administration Shell for Industry 4.0 "
