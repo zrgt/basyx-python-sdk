@@ -1,7 +1,7 @@
 ﻿<environment xmlns="https://admin-shell.io/aas/3/0">
   <assetAdministrationShells>
     <assetAdministrationShell>
-      <idShort>2900542_ELR_H3_I_SC__24DC_500AC_0_6</idShort>
+      <idShort>ELR_H3_I_SC__24DC_500AC_0_6_2900542</idShort>
       <id>https://phoenixcontact.com/qr/2900542/1/aas/1B</id>
       <assetInformation>
         <assetKind>Instance</assetKind>
