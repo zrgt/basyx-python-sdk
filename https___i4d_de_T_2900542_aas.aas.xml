@@ -31922,7 +31922,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ManufacturerProductDesignation</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32016,7 +32016,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ManufacturerProductFamily</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32333,7 +32333,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ManufacturerProductRoot</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32372,7 +32372,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ManufacturerProductType</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32411,7 +32411,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>OrderCodeOfManufacturer</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32450,7 +32450,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ProductArticleNumberOfManufacturer</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32840,7 +32840,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>AssetSpecificProperties</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -32879,7 +32879,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>DesignationOfCertificateOrApproval</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33035,7 +33035,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MarkingAdditionalText</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33152,7 +33152,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ApprovalAgencyTestingAgency</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33230,7 +33230,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>RatedInsulationVoltage</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>V</unit>
@@ -33279,7 +33279,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>InstructionsControlDrawing</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33318,7 +33318,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>SpecificConditionsForUse</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33474,7 +33474,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>ExternalElectricalCircuit</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33552,7 +33552,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>RegionalSpecificMarking</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33591,7 +33591,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>EquipmentProtectionLevel</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -33630,7 +33630,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MinimumAmbientTemperature</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>ºC</unit>
@@ -33718,7 +33718,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MaxAmbientTemperature</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>ºC</unit>
@@ -33767,7 +33767,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MaxSurfaceTemperatureForDustProof</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>ºC</unit>
@@ -33816,7 +33816,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>LowerLimitingValueOfProcessTemperature</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>ºC</unit>
@@ -33865,7 +33865,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>UpperLimitingValueOfProcessTemperature</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>ºC</unit>
@@ -33953,7 +33953,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>DesignationOfElectricalTerminal</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -34109,7 +34109,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>SafetyRelatedPropertiesForPassiveBehaviour</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -34148,7 +34148,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>SafetyRelatedPropertiesForActiveBehaviour</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -34334,7 +34334,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MaxInternalInductance</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>mH</unit>
@@ -34383,7 +34383,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MaxInternalCapacitance</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>µF</unit>
@@ -34677,7 +34677,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>MaxExternalInductanceResistanceRatio</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>mH/Ω</unit>
@@ -34727,7 +34727,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>GuidelineSpecificProperties</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -34766,7 +34766,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>GuidelineForConformityDeclaration</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -34855,7 +34855,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>RoleOfContactPerson</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -35654,7 +35654,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>AddressOfAdditionalLink</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -35693,7 +35693,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>TypeOfCommunication</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36044,7 +36044,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>FurtherDetailsOfContact</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37997,7 +37997,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>degree_of_protection</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -38267,7 +38267,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Rated_current__In__for_the_power_loss_specification</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>A</unit>
@@ -38327,7 +38327,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Power_loss__static__current_independent__Pls_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>W</unit>
@@ -38387,7 +38387,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Application_standards00</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -38437,7 +38437,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Power_loss_per_pole__current_dependent__PlIp_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>W</unit>
@@ -38497,7 +38497,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>certificate_approval00</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -38547,7 +38547,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>type_of_enveloping_body</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -38767,7 +38767,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_the_executions_of_the_housing_parts</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -38817,7 +38817,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Rated_operating_current_Ie</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>A</unit>
@@ -38877,7 +38877,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>min__rated_control_voltage_Us_with_DC</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>V</unit>
@@ -39037,7 +39037,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Design_of_the_electrical_connection_for_auxiliary_and_control_current_circuit</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39137,7 +39137,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Lowest_value_of_setting_range_for_overload_tripper</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>A</unit>
@@ -39197,7 +39197,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Rated_operating_current_Ie_with_AC_3__400_V</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>A</unit>
@@ -39257,7 +39257,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Greatest_value_of_overload_release_adjustment_range</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>A</unit>
@@ -39317,7 +39317,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_control_centers</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39367,7 +39367,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>type_of_coordination</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39417,7 +39417,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_auxiliary_contacts_as_opener</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39467,7 +39467,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_auxiliary_contacts_as_shutter</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39567,7 +39567,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Kind_of_motor_starter</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39617,7 +39617,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_resistance_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39667,7 +39667,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_ambient_temperatures</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39717,7 +39717,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Range_of_ambient_temperature</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39767,7 +39767,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_atmospheric_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39817,7 +39817,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_atmospheric_humidity_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39867,7 +39867,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_vibration_resistance_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39917,7 +39917,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_shock_resistance_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -39967,7 +39967,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_protection_types</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40017,7 +40017,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_explosion_protection_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40067,7 +40067,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_noise_protection_data</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40117,7 +40117,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_parts_relations</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40167,7 +40167,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_part_relation_variants</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40217,7 +40217,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Type_of_part_relation_variant_item</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40267,7 +40267,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Using_information_of_the_part_relation_variant</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40317,7 +40317,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_associated_parts</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40417,7 +40417,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Manufacturer_product_description</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40467,7 +40467,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>GLN_of_manufacturer</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40517,7 +40517,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Part_relation_to_the_main_device</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40567,7 +40567,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_fixing_variants</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40667,7 +40667,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_mounting_points</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40717,7 +40717,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>name_of_fixing_variant</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40767,7 +40767,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Fixing_supply_point__in_mm_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40817,7 +40817,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_mounting_cut_outs</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40867,7 +40867,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_barred_areas</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40917,7 +40917,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_mounting_orientations</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -40967,7 +40967,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>mounting_orientation</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41067,7 +41067,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_connectors</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41217,7 +41217,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>direction_of_connection</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41267,7 +41267,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Connector_identification</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41317,7 +41317,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_rated_values_of_device_functions</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41367,7 +41367,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_executions_of_the_electric_connector</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41467,7 +41467,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>type_of_electrical_terminal</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41517,7 +41517,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_the_single_wire_conductor</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41567,7 +41567,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_the_more_wire_conductors</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41617,7 +41617,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_the_fine_wire_conductors_without_splicing_protection</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41667,7 +41667,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>max__single_wire_conductor_size__AWG_KCMIL_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41717,7 +41717,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>total_maximum_of_cross_section__AWG_KCMIL_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41767,7 +41767,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>min__single_wire_conductor_size__AWG_KCMIL_</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41817,7 +41817,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_the_fine_wire_conductor_with_splicing_protection</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41867,7 +41867,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>multi_wired_conductor_cross_section__mm__</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -41917,7 +41917,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>total_maximum_of_cross_section__mm__</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>mm²</unit>
@@ -41977,7 +41977,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>single_wire_conductor_cross_section__mm__</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42027,7 +42027,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Insulation_stripped_length</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <unit>mm</unit>
@@ -42137,7 +42137,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>type_of_function_groups</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42187,7 +42187,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number_of_function_groups</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42237,7 +42237,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>number_of_documentations</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42287,7 +42287,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>source_as_path_info</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42387,7 +42387,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>language_of_document</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -42487,7 +42487,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>type_of_source_file</text>
+                  <text>dummy_shortname</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
