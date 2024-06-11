@@ -70,7 +70,7 @@
         <type>ExternalReference</type>
         <keys>
           <key>
-            <type>Submodel</type>
+            <type>GlobalReference</type>
             <value>https://admin-shell.io/ZVEI/TechnicalData/Submodel/1/2</value>
           </key>
         </keys>
@@ -16195,7 +16195,7 @@
         <type>ExternalReference</type>
         <keys>
           <key>
-            <type>Submodel</type>
+            <type>GlobalReference</type>
             <value>https://admin-shell.io/zvei/nameplate/2/0/Nameplate</value>
           </key>
         </keys>
@@ -16911,7 +16911,7 @@
         <type>ExternalReference</type>
         <keys>
           <key>
-            <type>Submodel</type>
+            <type>GlobalReference</type>
             <value>0173-1#01-AHF578#001</value>
           </key>
         </keys>
