@@ -1217,11 +1217,11 @@
                       </semanticId>
                       <value>
                         <langStringTextType>
-                          <language>MIN</language>
+                          <language>mi</language>
                           <text>-25 MIN </text>
                         </langStringTextType>
                         <langStringTextType>
-                          <language>MAX</language>
+                          <language>mx</language>
                           <text>70 MAX </text>
                         </langStringTextType>
                       </value>
@@ -1432,11 +1432,11 @@
                       </semanticId>
                       <value>
                         <langStringTextType>
-                          <language>MIN</language>
+                          <language>mi</language>
                           <text>-40 MIN </text>
                         </langStringTextType>
                         <langStringTextType>
-                          <language>MAX</language>
+                          <language>mx</language>
                           <text>80 MAX </text>
                         </langStringTextType>
                       </value>
@@ -1617,11 +1617,11 @@
                       </semanticId>
                       <value>
                         <langStringTextType>
-                          <language>MIN</language>
+                          <language>mi</language>
                           <text>-40 MIN </text>
                         </langStringTextType>
                         <langStringTextType>
-                          <language>MAX</language>
+                          <language>mx</language>
                           <text>80 MAX </text>
                         </langStringTextType>
                       </value>
@@ -5298,15 +5298,15 @@
                       <text>3.134924 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>90 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.38 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>90 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -5460,15 +5460,15 @@
                       <text>6.65 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>1 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -5830,15 +5830,15 @@
                       <text>50.49363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -5945,11 +5945,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -6174,11 +6174,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -6212,11 +6212,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -6312,15 +6312,15 @@
                       <text>50.49363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -6427,11 +6427,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -6656,11 +6656,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -6694,11 +6694,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -6794,15 +6794,15 @@
                       <text>50.49363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -6909,11 +6909,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -7138,11 +7138,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -7176,11 +7176,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -7276,15 +7276,15 @@
                       <text>50.49363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -7391,11 +7391,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -7620,11 +7620,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -7658,11 +7658,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -7758,15 +7758,15 @@
                       <text>72.09363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -7873,11 +7873,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -8102,11 +8102,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -8140,11 +8140,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -8240,15 +8240,15 @@
                       <text>72.09363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -8355,11 +8355,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -8584,11 +8584,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -8622,11 +8622,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -8722,15 +8722,15 @@
                       <text>72.09363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -8837,11 +8837,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -9066,11 +9066,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -9104,11 +9104,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -9204,15 +9204,15 @@
                       <text>72.09363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -9319,11 +9319,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -9548,11 +9548,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -9586,11 +9586,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -9686,15 +9686,15 @@
                       <text>93.69363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -9801,11 +9801,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -10030,11 +10030,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -10068,11 +10068,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -10168,15 +10168,15 @@
                       <text>93.69363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -10283,11 +10283,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -10512,11 +10512,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -10550,11 +10550,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -10650,15 +10650,15 @@
                       <text>93.69363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -10765,11 +10765,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -10994,11 +10994,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -11032,11 +11032,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -11132,15 +11132,15 @@
                       <text>93.69363 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -11247,11 +11247,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -11476,11 +11476,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -11514,11 +11514,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -11614,15 +11614,15 @@
                       <text>50.493324 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -11729,11 +11729,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -11958,11 +11958,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -11996,11 +11996,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -12096,15 +12096,15 @@
                       <text>50.493324 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -12211,11 +12211,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -12440,11 +12440,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -12478,11 +12478,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -12578,15 +12578,15 @@
                       <text>50.493324 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -12693,11 +12693,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -12922,11 +12922,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -12960,11 +12960,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -13060,15 +13060,15 @@
                       <text>72.093323 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -13175,11 +13175,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -13404,11 +13404,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -13442,11 +13442,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -13542,15 +13542,15 @@
                       <text>72.093323 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -13657,11 +13657,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -13886,11 +13886,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -13924,11 +13924,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -14024,15 +14024,15 @@
                       <text>72.093323 AXIS_Z </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_X</language>
+                      <language>dx</language>
                       <text>0 AXIS_DIRECTION_X </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Y</language>
+                      <language>dy</language>
                       <text>-0.83867 AXIS_DIRECTION_Y </text>
                     </langStringTextType>
                     <langStringTextType>
-                      <language>AXIS_DIRECTION_Z</language>
+                      <language>dz</language>
                       <text>-0.544639 AXIS_DIRECTION_Z </text>
                     </langStringTextType>
                   </value>
@@ -14139,11 +14139,11 @@
                           </semanticId>
                           <value>
                             <langStringTextType>
-                              <language>MIN</language>
+                              <language>mi</language>
                               <text>0.5 MIN </text>
                             </langStringTextType>
                             <langStringTextType>
-                              <language>MAX</language>
+                              <language>mx</language>
                               <text>0.6 MAX </text>
                             </langStringTextType>
                           </value>
@@ -14368,11 +14368,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
@@ -14406,11 +14406,11 @@
                               </semanticId>
                               <value>
                                 <langStringTextType>
-                                  <language>MIN</language>
+                                  <language>mi</language>
                                   <text>0.2 MIN </text>
                                 </langStringTextType>
                                 <langStringTextType>
-                                  <language>MAX</language>
+                                  <language>mx</language>
                                   <text>2.5 MAX </text>
                                 </langStringTextType>
                               </value>
