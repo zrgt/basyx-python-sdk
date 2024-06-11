@@ -36208,7 +36208,7 @@
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Document Domain Identifikator</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36328,11 +36328,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Document is primary</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Dokument ist primär</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36394,7 +36394,7 @@
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Klassenidentifikator</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36514,11 +36514,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Classification system</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Klassifizierungssystem</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36576,11 +36576,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>language of document</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Sprache des Dokuments</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36824,11 +36824,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>document description</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Dokumentenbeschreibung</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -36948,11 +36948,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Document status set date</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Datum der Einstellung des Dokumentenstatus</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37072,11 +37072,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Organization short name</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Kurzname der Organisation</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37134,11 +37134,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Organization official name</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Offizieller Name der Organisation</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37196,11 +37196,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Reference to other document</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Verweis auf ein anderes Dokument</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37258,11 +37258,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Based on other document</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Basierend auf einem anderen Dokument</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37320,11 +37320,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Translation of other document</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Übersetzung eines anderen Dokuments</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37506,11 +37506,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Document (handover documentation)</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Dokument (Übergabedokumentation)</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37568,11 +37568,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Document identifier</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Dokumentidentifikator</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37630,11 +37630,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Document classification</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text>Dokumentenklassifizierung</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37888,11 +37888,11 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Number of documents (handover documentation)</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
                 <langStringShortNameTypeIec61360>
                   <language>de</language>
-                  <text> Anzahl der Dokumente (Übergabedokumentation)</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
@@ -37954,7 +37954,7 @@
               <shortName>
                 <langStringShortNameTypeIec61360>
                   <language>en</language>
-                  <text>Explanatory statement</text>
+                  <text>dummy</text>
                 </langStringShortNameTypeIec61360>
               </shortName>
               <definition>
