@@ -30995,7 +30995,7 @@
           <value>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod1</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
@@ -31016,7 +31016,7 @@
             </property>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod2</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
@@ -31284,7 +31284,7 @@
           <value>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod3</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
@@ -31305,7 +31305,7 @@
             </property>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod4</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
@@ -31573,7 +31573,7 @@
           <value>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod5</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
@@ -31594,7 +31594,7 @@
             </property>
             <property>
               <category>PARAMETER</category>
-              <idShort>PCFCalculationMethod</idShort>
+              <idShort>PCFCalculationMethod6</idShort>
               <description>
                 <langStringTextType>
                   <language>en</language>
