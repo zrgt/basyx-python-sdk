@@ -2,10 +2,6 @@ name: ci
 
 on: [push, pull_request]
 
-env:
-  X_PYTHON_MIN_VERSION: "3.9"
-  X_PYTHON_MAX_VERSION: "3.12"
-
 jobs:
   check-python-versions:
     # This job checks that the Python Versions we support match and are not End of Life
@@ -15,35 +11,23 @@ jobs:
         working-directory: ./etc/scripts
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ env.X_PYTHON_MIN_VERSION }}
-        uses: actions/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.X_PYTHON_MIN_VERSION }}
+          python-version-file: 'sdk/pyproject.toml'
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r ./check_python_versions_requirements.txt
       - name: Check Supported Python Versions
         run: |
-          python check_python_versions_supported.py \
-            ${{ env.X_PYTHON_MIN_VERSION }} \
-            ${{ env.X_PYTHON_MAX_VERSION }}
-
-      - name: Check Python Versions coincide with the SDKs pyproject.toml
-        run: |
-          python check_python_versions_coincide.py \
-            ../../sdk/pyproject.toml \
-            ${{ env.X_PYTHON_MIN_VERSION }} \
-            ${{ env.X_PYTHON_MAX_VERSION }}
+          python check_python_versions_supported.py
 
       # Todo: Check other pyproject.toml here as well, as we add them
 
   sdk-test:
     # This job runs the unittests on the python versions specified down at the matrix
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9", "3.12"]
     env:
       COUCHDB_ADMIN_PASSWORD: "yo0Quai3"
       # (2024-10-11, s-heppner)
@@ -65,16 +49,10 @@ jobs:
         working-directory: ./sdk
     steps:
     - uses: actions/checkout@v2
-    - name: Verify Matrix Version matches Global Version
-      run: |
-        if [ "${{ matrix.python-version }}" != "${{ env.X_PYTHON_MIN_VERSION }}" ] && [ "${{ matrix.python-version }}" != "${{ env.X_PYTHON_MAX_VERSION }}" ]; then
-          echo "Error: Matrix version ${{ matrix.python-version }} does not match global version."
-          exit 1
-        fi
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version-file: 'sdk/pyproject.toml'
     - name: Collect schema files from aas-specs
       run: |
         mkdir -p ./test/adapter/schema
@@ -103,10 +81,10 @@ jobs:
         working-directory: ./sdk
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ env.X_PYTHON_MIN_VERSION }}
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ env.X_PYTHON_MIN_VERSION }}
+        python-version-file: 'sdk/pyproject.toml'
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -126,10 +104,10 @@ jobs:
         working-directory: ./sdk
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ env.X_PYTHON_MIN_VERSION }}
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ env.X_PYTHON_MIN_VERSION }}
+        python-version-file: 'sdk/pyproject.toml'
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -152,10 +130,10 @@ jobs:
         working-directory: ./sdk
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ env.X_PYTHON_MIN_VERSION }}
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ env.X_PYTHON_MIN_VERSION }}
+        python-version-file: 'sdk/pyproject.toml'
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -173,10 +151,10 @@ jobs:
         working-directory: ./sdk
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ env.X_PYTHON_MIN_VERSION }}
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ env.X_PYTHON_MIN_VERSION }}
+        python-version-file: 'sdk/pyproject.toml'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
